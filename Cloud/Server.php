@@ -574,33 +574,86 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_PUT);
     }
 
+    /**
+     * Resize server to another flavor (server configuration)
+     *
+     * @param int $serverId id of server you wish to resize
+     * @return bool returns true on success or false on fail
+     */
     public function resizeServer ($serverId, $flavorId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/action';
         $this->_apiJson = array ('resize' => array(
                                     'flavorId' => (int) $flavorId));
         $this->_doRequest(self::METHOD_PUT);
+
+        // If confirmation is successful update internal server array
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
+            $this->_apiServers[(int) $serverId]['flavorId'] = (int) $flavorId;
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Confirm resize of server
+     *
+     * @param int $serverId id of server this confirmation is for
+     * @return bool returns true on success or false on fail
+     */
     public function confirmResize ($serverId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/action';
         $this->_apiJson = array ('confirmResize' => '1');
         $this->_doRequest(self::METHOD_PUT);
+
+        // If confirmation is successful
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Revert resize changes
+     *
+     * @param int $serverId id of server you wish to revert resize for
+     * @return bool returns true on success or false on fail
+     */
     public function revertResize ($serverId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/action';
         $this->_apiJson = array ('revertResize' => '1');
         $this->_doRequest(self::METHOD_PUT);
+
+        // If revert is successful
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Reboots server
+     *
+     * @param int $serverId id of server you wish to reboot
+     * @return bool returns true on success or false on fail
+     */
     public function rebootServer ($serverId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/action';
         $this->_apiJson = array ('reboot' => array(
                                     'type' => 'HARD'));
         $this->_doRequest(self::METHOD_POST);
+
+        // If reboot request was successfully recieved
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
+            return true;
+        }
+
+        return false;
     }
 }
