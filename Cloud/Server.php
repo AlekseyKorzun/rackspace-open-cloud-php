@@ -49,6 +49,7 @@ class Cloud_Server {
     protected $_apiServers = array();
     protected $_apiFlavors = array();
     protected $_apiImages = array();
+    protected $_apiIPGroups = array();
     protected $_apiFiles = array();
 
     protected $_enableDebug = false;
@@ -68,6 +69,41 @@ class Cloud_Server {
 
         $this->_apiUser = $apiId;
         $this->_apiKey = $apiKey;
+    }
+
+    /**
+     * Get authentication token
+     *
+     * @return mixed return authentication token or false on failure
+     */
+    public function getToken()
+    {
+        if(!empty($this->_apiToken)) {
+           return $this->_apiToken;
+        }
+
+        return false;
+    }
+
+    /**
+     * Set authentication token
+     *
+     * @param string $tokenId token you wish to set
+     * @return null
+     */
+    public function setToken($tokenId)
+    {
+        $this->_apiToken = $tokenId;
+    }
+
+    /**
+     * Perform authentication
+     *
+     * @return string returns recieved token
+     */
+    public function authenticate () {
+        $this->_doRequest(self::METHOD_AUTH);
+        return $this->_apiToken;
     }
 
     /**
@@ -279,7 +315,7 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_POST);
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '200') {
-            if ($this->_apiResponse->image) {
+            if (property_exists($this->_apiResponse, 'image')) {
                 $this->_apiImages[(int) $this->_apiResponse->image->id] = array(
                       'serverId' => (int)$this->_apiResponse->image->serverId,
                       'name' => (string) $this->_apiResponse->image->name,
@@ -362,19 +398,25 @@ class Cloud_Server {
                            'status' => (string) $this->_apiResponse->server->status,
                            'addresses' => array(),
                            'metadata' => array());
-                if ($this->_apiResponse->server->addresses->public) {
-                    foreach ($this->_apiResponse->server->addresses->public as $public) {
-                        $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['public'][]
-                            = (string) $public;
+                if (property_exists($this->_apiResponse->server, 'sharedIpGroupId')) {
+                    $this->_apiServers[(int) $this->_apiResponse->server->id]['sharedIpGroupId']
+                        = (string) $this->_apiResponse->server->sharedIpGroupId;
+                }
+                if(property_exists($this->_apiResponse->server, 'addresses')) {
+                    if(property_exists($this->_apiResponse->server->addresses, 'public')) {
+                        foreach ($this->_apiResponse->server->addresses->public as $public) {
+                            $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['public'][]
+                                = (string) $public;
+                        }
+                    }
+                    if(property_exists($this->_apiResponse->server->addresses, 'private')) {
+                        foreach ($this->_apiResponse->server->addresses->private as $private) {
+                            $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['private'][]
+                                = (string) $private;
+                        }
                     }
                 }
-                if ($this->_apiResponse->server->addresses->private) {
-                    foreach ($this->_apiResponse->server->addresses->private as $private) {
-                        $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['private'][]
-                            = (string) $private;
-                    }
-                }
-                if ($this->_apiResponse->server->metadata) {
+                if(property_exists($this->_apiResponse->server, 'metadata')) {
                     foreach ($this->_apiResponse->server->metadata as $key => $value) {
                         $this->_apiServers[(int) $this->_apiResponse->server->id]['metadata'][(string) $key]
                             = (string) $value;
@@ -429,27 +471,70 @@ class Cloud_Server {
         return false;
     }
 
-    public function setServerIp ($serverId, $serverIp, $groupId)
+    public function shareServerIp ($serverId, $serverIp, $groupId, $configure = false)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'. $serverIp;
         $this->_apiJson = array ('shareIp' => array(
                                     'sharedIpGroupId' => (int) $groupId,
-                                    'configureServer' => 'true'));
+                                    'configureServer' => ($configure ? 'true' : 'false')));
+        $this->_doRequest(self::METHOD_PUT);
+
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '201') {
+
+        }
+    }
+
+    public function unshareServerIp ($serverId, $serverIp)
+    {
+        $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'. $serverIp;
         $this->_doRequest(self::METHOD_PUT);
     }
 
-    public function deleteServerIp ($serverId, $serverIp)
+    /**
+     * Get IP's assigned to server
+     *
+     * @param int $serverId id of server you wish to retrieve ips for
+     * @param string $type type of addresses to retrieve could be private/public or
+     * false for both types.
+     * @return mixed returns array of addresses or false of failure
+     */
+    public function getServerIp ($serverId, $type = false)
     {
-        $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'.$serverIp;
-        $this->_doRequest(self::METHOD_PUT);
-    }
-
-    public function getServerIp ($serverIp, $type = false)
-    {
-       $this->_apiResource = '/servers/'.(int) $serverIp.'/ips'.($type ? '/'.$type : '');
+       $this->_apiResource = '/servers/'. (int) $serverId .'/ips'. ($type ? '/'. $type : '');
        $this->_doRequest();
+
+        if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
+                || $this->_apiResponseCode == '203')) {
+            if ($this->_apiResponse->addresses) {
+                if ($this->_apiResponse->addresses->public) {
+                    unset($this->_apiServers[(int) $serverId]['addresses']['public']);
+                    foreach ($this->_apiResponse->addresses->public as $public) {
+                        $this->_apiServers[(int) $serverId]['addresses']['public'][]
+                            = (string) $public;
+                    }
+                }
+                if ($this->_apiResponse->addresses->private) {
+                    unset($this->_apiServers[(int) $serverId]['addresses']['private']);
+                    foreach ($this->_apiResponse->addresses->private as $private) {
+                        $this->_apiServers[(int) $serverId]['addresses']['private'][]
+                            = (string) $private;
+                    }
+                }
+
+                return $this->_apiServers[(int) $serverId]['addresses'];
+            }
+        }
+
+        return false;
     }
 
+    /**
+     * Add a server to shared ip group
+     *
+     * @param string $name name of shared ip group you are creating
+     * @param int $serverId id of server you wish to add to this group
+     * @return mixed returns id of created shared ip group or false on failure
+     */
     public function addSharedIpGroup ($name, $serverId)
     {
         $this->_apiResource = '/shared_ip_groups';
@@ -457,21 +542,104 @@ class Cloud_Server {
                                     'name' => (string) $name,
                                     'server' => (int) $serverId));
         $this->_doRequest(self::METHOD_POST);
+
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '201') {
+            if(property_exists($this->_apiResponse, 'sharedIpGroup')) {
+                $this->_apiServers[(int) $serverId]['sharedIpGroupId']
+                       = (int) $this->_apiResponse->sharedIpGroup->id;
+                return $this->_apiServers[(int) $serverId]['sharedIpGroupId'];
+            }
+        }
+
+        return false;
     }
 
+    /**
+     * Delete shared IP group
+     *
+     * @param int $groupId id of group you wish to delete
+     * @return bool returns true on success and false on failure
+     */
     public function deleteSharedIpGroup ($groupId)
     {
         $this->_apiResource = '/shared_ip_groups/'. (int) $groupId;
         $this->_doRequest(self::METHOD_DELETE);
+
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
+            unset($this->_apiIPGroups[(int) $groupId]);
+            return true;
+        }
+
+        return false;
     }
 
-    public function getSharedIpGroup ($isDetailed = false, $groupId = false)
+    /**
+     * Retrieve details for specific IP group
+     *
+     * @param int $groupId id of specific shared group you wish to retrieve details
+     * for
+     * @return mixed returns array containing details about requested group or false on failure
+     */
+    public function getSharedIpGroup ($groupId)
+    {
+        $this->_apiResource = '/shared_ip_groups/'. (int) $groupId;
+        $this->_doRequest();
+
+        if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
+                || $this->_apiResponseCode == '203')) {
+             if (property_exists($this->_apiResponse, 'sharedIpGroup')) {
+                $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id] = array(
+                      'servers' => array(),
+                      'name' => (string) $this->_apiResponse->sharedIpGroup->name,
+                      'id' => (int) $this->_apiResponse->sharedIpGroup->id);
+
+                if(property_exists($this->_apiResponse->sharedIpGroup, 'servers')) {
+                    foreach ($this->_apiResponse->sharedIpGroup->servers as $server) {
+                        $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id]['servers'][]
+                              = (int) $server;
+                    }
+                }
+
+                return $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id];
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Retrieve all the available shared IP groups
+     *
+     * @param bool $isDetailed should response contain an array of servers group has
+     * @return mixed returns array of groups or false on failure
+     */
+    public function getSharedIpGroups ($isDetailed = false)
     {
         $this->_apiResource = '/shared_ip_groups'. ($isDetailed ? '/detail' : '');
-        if(is_numeric($groupId)) {
-            $this->_apiResource = $this->_apiResource .'/'. (int) $groupId;
-        }
         $this->_doRequest();
+
+        if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
+                || $this->_apiResponseCode == '203')) {
+             if (property_exists($this->_apiResponse, 'sharedIpGroups')) {
+                 foreach($this->_apiResponse->sharedIpGroups as $sharedIpGroup) {
+                    $this->_apiIPGroups[(int) $sharedIpGroup->id] = array(
+                          'name' => (string) $sharedIpGroup->name,
+                          'id' => (int) $sharedIpGroup->id);
+
+                    if($isDetailed && property_exists($sharedIpGroup, 'servers')) {
+                        $this->_apiIPGroups[(int) $sharedIpGroup->id]['servers'] = array();
+                        foreach ($sharedIpGroup->servers as $server) {
+                            $this->_apiIPGroups[(int) $sharedIpGroup->id]['servers'][]
+                                  = (int) $server;
+                        }
+                    }
+                 }
+
+                return $this->_apiIPGroups;
+            }
+        }
+
+        return false;
     }
 
     public function getBackupSchedule ($serverId)
@@ -560,6 +728,7 @@ class Cloud_Server {
                             'hostId' => (string) $serverXml['hostId'],
                             'progress' => (int) $serverXml['progress'],
                             'status' => (string) $serverXml['status'],
+                            'sharedIpGroupId' => (int) $serverXml['sharedIpGroupId'],
                             'addresses' => array(),
                             'metadata' => array());
                 if ($serverXml->addresses->public) {
