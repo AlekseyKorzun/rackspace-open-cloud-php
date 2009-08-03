@@ -41,6 +41,30 @@ class Cloud_Server {
     protected $_apiServerUri;
     protected $_apiAuthUri = 'https://auth.api.rackspacecloud.com/v1.0';
 
+    protected $_apiBackup = array(
+        'weekly' => array(
+                'DISABLED',
+                'SUNDAY',
+                'MONDAY',
+                'TUESDAY',
+                'WEDNESDAY',
+                'THURSDAY',
+                'FRIDAY',
+                'SATURDAY'),
+        'daily' => array(
+                'DISABLED',
+                'H_0000_0200',
+                'H_0200_0400',
+                'H_0400_0600',
+                'H_0600_0800',
+                'H_0800_1000',
+                'H_1000_1200',
+                'H_1400_1600',
+                'H_1600_1800',
+                'H_1800_2000',
+                'H_2000_2200',
+                'H_2200_0000'));
+
     protected $_apiResource;
     protected $_apiAgent = 'PHP Cloud Server client';
     protected $_apiJson;
@@ -471,23 +495,37 @@ class Cloud_Server {
         return false;
     }
 
-    public function shareServerIp ($serverId, $serverIp, $groupId, $configure = false)
+    public function shareServerIp ($serverId, $serverIp, $groupId, $doConfigure = false)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'. $serverIp;
         $this->_apiJson = array ('shareIp' => array(
                                     'sharedIpGroupId' => (int) $groupId,
-                                    'configureServer' => ($configure ? 'true' : 'false')));
+                                    'configureServer' => (bool) $doConfigure));
         $this->_doRequest(self::METHOD_PUT);
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '201') {
-
+            return true;
         }
+
+        return false;
     }
 
+    /**
+     * Removes a shared server IP from server
+     * @param int $serverId id of server this action is peformed for
+     * @param string $serverIp IP you wish to unshare
+     * @return bool returns true on success or false on failure
+     */
     public function unshareServerIp ($serverId, $serverIp)
     {
-        $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'. $serverIp;
-        $this->_doRequest(self::METHOD_PUT);
+        $this->_apiResource = '/servers/'. (int) $serverId .'/ips/public/'. (string) $serverIp;
+        $this->_doRequest(self::METHOD_DELETE);
+
+        if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -642,26 +680,95 @@ class Cloud_Server {
         return false;
     }
 
+    /**
+     * Retrieve back-up schedule for a specific server
+     *
+     * @param int $serverId id of server you wish to retrieve back-up schedule for
+     * @return mixed returns array of current back-up schedule or false on failure
+     */
     public function getBackupSchedule ($serverId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/backup_schedule';
         $this->_doRequest();
+
+	    if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
+                || $this->_apiResponseCode == '203')) {
+
+            if (property_exists($this->_apiResponse, 'backupSchedule')) {
+                    $this->_apiServers[(int) $serverId]['backup'] = array(
+                          'enabled' => (bool) ($this->_apiResponse->backupSchedule->enabled ? true : false),
+                          'daily' => (string) $this->_apiResponse->backupSchedule->daily,
+                          'weekly' => (string) $this->_apiResponse->backupSchedule->weekly);
+                return $this->_apiServers[(int) $serverId]['backup'];
+            }
+	    }
+
+        return false;
     }
 
-    public function addBackupSchedule ($serverId, $weekly, $daily, $isEnabled)
+    /**
+     * Create a new back-up schedule for a server
+     *
+     * @param int $serverId id of a server this back-up schedule is intended for
+     * @param string $weekly day of the week this back-up should run, please
+     * $_apiBackup array and/or documentation for valid parameters.
+     * @param string $daily time of the day this back-up should run, please
+     * $_apiBackup array and/or documentation for valid parameters.
+     * @param bool $isEnabled should this scheduled back-up be enabled or disabled,
+     * default is set to enabled.
+     * @throws Cloud_Exception
+     * @return bool true on success and false on failure
+     */
+    public function addBackupSchedule ($serverId, $weekly, $daily, $isEnabled = true)
     {
+        if (!in_array((string) strtoupper($weekly), $this->_apiBackup['weekly'])) {
+            throw new Cloud_Exception ('Passed weekly back-up parameter is not supported');
+        }
+
+        if (!in_array((string) strtoupper($daily), $this->_apiBackup['daily'])) {
+            throw new Cloud_Exception ('Passed weekly back-up parameter is not supported');
+        }
+
         $this->_apiResource = '/servers/'. (int) $serverId .'/backup_schedule';
-        $this->_apiJson = array ('backup' => array(
-                                    'enabled' => (string) $isEnabled,
-                                    'weekly' => (string) $weekly,
-                                    'daily' => (string) $daily));
+        $this->_apiJson = array ('backupSchedule' => array(
+                                    'enabled' => (bool) $isEnabled,
+                                    'weekly' => (string) strtoupper($weekly),
+                                    'daily' => (string) strtoupper($daily)));
         $this->_doRequest(self::METHOD_POST);
+
+	    if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
+	        $this->_apiServers[(int) $serverId]['backup'] = array(
+	                'enabled' => (bool) $isEnabled,
+	                'daily' => (string) $daily,
+	                'weekly' => (string) $weekly);
+            return true;
+	    }
+
+        return false;
     }
 
+    /**
+     * Deletes scheduled back-up for specific server
+     *
+     * @param int $serverId id of server you wish to delete all scheduled back-ups
+     * for
+     * @return bool returns true on success or false on failure
+     */
     public function deleteBackupSchedule ($serverId)
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/backup_schedule';
         $this->_doRequest(self::METHOD_DELETE);
+
+	    if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
+	        if(array_key_exists((int) $serverId, $this->_apiServers)
+                    && array_key_exists('backup', $this->_apiServers[(int) $serverId])) {
+	            unset($this->_apiServers[(int) $serverId]['backup']);
+	        }
+
+            return true;
+	    }
+
+        return false;
     }
 
     /**
@@ -899,13 +1006,14 @@ class Cloud_Server {
      * Reboots server
      *
      * @param int $serverId id of server you wish to reboot
+     * @param string $type specify what kind of reboot you wish to perform
      * @return bool returns true on success or false on fail
      */
-    public function rebootServer ($serverId)
+    public function rebootServer ($serverId, $type = 'soft')
     {
         $this->_apiResource = '/servers/'. (int) $serverId .'/action';
         $this->_apiJson = array ('reboot' => array(
-                                    'type' => 'HARD'));
+                                    'type' => (string) strtoupper($type)));
         $this->_doRequest(self::METHOD_POST);
 
         // If reboot request was successfully recieved
