@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * If you are using autoloader (like you should!) remove this include
+ */
+
 include './Exception.php';
 
 /**
