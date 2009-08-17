@@ -26,11 +26,6 @@ include './Exception.php';
  * @link http://www.schematic.com
  * @version 0.1
  * @license bsd
- *
- * @todo back-up calls
- * @todo ip calls
- * @todo smart limit logic
- * @todo smart 24 hour token storage
  */
 
 class Cloud_Server {
@@ -76,10 +71,6 @@ class Cloud_Server {
     protected $_apiResponse;
     protected $_apiResponseCode;
     protected $_apiServers = array();
-    protected $_apiFlavors = array();
-    protected $_apiImages = array();
-    protected $_apiIPGroups = array();
-    protected $_apiFiles = array();
 
     protected $_enableDebug = false;
 
@@ -192,7 +183,7 @@ class Cloud_Server {
             curl_setopt($curl, CURLOPT_VERBOSE, 1);
         }
 
-        $this->_apiResponse = json_decode(curl_exec($curl));
+        $this->_apiResponse = curl_exec($curl);
 
         // Also for debugging purposes output response we got
         if ($this->_enableDebug) {
@@ -280,7 +271,7 @@ class Cloud_Server {
      * Retrieves details regarding specific server flavor
      *
      * @param int $flavorId id of a flavor you wish to retrieve details for
-     * @return mixed returns an array containing details for requested flavor or
+     * @return mixed returns json string containing details for requested flavor or
      * false on failure
      */
     public function getFlavor ($flavorId)
@@ -289,14 +280,8 @@ class Cloud_Server {
         $this->_doRequest();
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
-                || $this->_apiResponseCode == '203')) {
-            if ($this->_apiResponse->flavor) {
-                $this->_apiFlavors[(int) $flavorId] = array(
-                        'name' => (string) $this->_apiResponse->flavor->name,
-                        'disk' => (string) $this->_apiResponse->flavor->disk,
-                        'ram' => (string) $this->_apiResponse->flavor->ram);
-                return $this->_apiFlavors[(int) $flavorId];
-            }
+           	    || $this->_apiResponseCode == '203')) {
+        	return $this->_apiResponse;
         }
 
         return false;
@@ -305,7 +290,7 @@ class Cloud_Server {
     /**
      * Retrieves all of the available server flavors
      *
-     * @return mixed returns an array of available server configurations or
+     * @return mixed returns json string containing available server configurations or
      * false on failure
      */
     public function getFlavors ()
@@ -314,15 +299,8 @@ class Cloud_Server {
         $this->_doRequest();
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
-                    || $this->_apiResponseCode == '203')) {
-            if ($this->_apiResponse->flavors) {
-                $this->_apiFlavors = array();
-                foreach ($this->_apiResponse->flavors as $flavor) {
-                    $this->_apiFlavors[(int) $flavor->id]['name']
-                        = (string) $flavor->name;
-                }
-                return $this->_apiFlavors;
-            }
+           	    || $this->_apiResponseCode == '203')) {
+        	return $this->_apiResponse;
         }
 
         return false;
@@ -333,7 +311,7 @@ class Cloud_Server {
      *
      * @param string $name name of new image
      * @param int $serverId server id for which you wish to base this image on
-     * @return mixed returns an array details of created image or false on failure
+     * @return mixed returns json string containing details of created image or false on failure
      */
     public function createImage ($name, $serverId)
     {
@@ -344,13 +322,7 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_POST);
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '200') {
-            if (property_exists($this->_apiResponse, 'image')) {
-                $this->_apiImages[(int) $this->_apiResponse->image->id] = array(
-                      'serverId' => (int)$this->_apiResponse->image->serverId,
-                      'name' => (string) $this->_apiResponse->image->name,
-                      'id' => (int) $this->_apiResponse->image->id);
-                return $this->_apiImages[(int) $this->_apiResponse->image->id];
-            }
+        	return $this->_apiResponse;
         }
 
         return false;
@@ -360,7 +332,7 @@ class Cloud_Server {
      * Retrieves details of specific image
      *
      * @param int $imageId id of image you wish to retrieve details for
-     * @return array details of requested image
+     * @return json string containing details of requested image
      */
     public function getImage ($imageId)
     {
@@ -369,21 +341,14 @@ class Cloud_Server {
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-            if ($this->_apiResponse->image) {
-                $this->_apiImages[(int) $imageId] = array(
-                        'name' => (string) $this->_apiResponse->image->name,
-                        'status' => (string) $this->_apiResponse->image->status,
-                        'created' => (string) $this->_apiResponse->image->created,
-                        'updated' => (string) $this->_apiResponse->image->updated);
-                return $this->_apiImages[(int) $imageId];
-            }
+            return $this->_apiResponse;
         }
     }
 
     /**
      * Retrieves all of the available images
      *
-     * @return mixed returns array of available images or false on failure
+     * @return mixed returns json string of available images or false on failure
      */
     public function getImages ()
     {
@@ -392,14 +357,7 @@ class Cloud_Server {
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-            if ($this->_apiResponse->images) {
-                // Reset internal image array
-                $this->_apiImages = array();
-                foreach($this->_apiResponse->images as $image) {
-                    $this->_apiImages[(int) $image->id]['name'] = (string) $image->name;
-                }
-                return $this->_apiImages;
-            }
+            return $this->_apiResponse;
         }
 
         return false;
@@ -408,7 +366,7 @@ class Cloud_Server {
     /**
      * Retrieves configuration details for specific server
      *
-     * @return mixed array containing server details or false on failure
+     * @return mixed json string containing server details or false on failure
      */
     public function getServer ($serverId)
     {
@@ -416,43 +374,14 @@ class Cloud_Server {
         $this->_doRequest();
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '200') {
-            if ($this->_apiResponse->server) {
+            // Save server names to avoid creating dublicate servers
+            if (property_exists($this->_apiResponse, 'server')) {
                 $this->_apiServers[(int) $this->_apiResponse->server->id] =
                     array('id' => (int) $this->_apiResponse->server->id,
-                           'name' => (string) $this->_apiResponse->server->name,
-                           'imageId' => (int) $this->_apiResponse->server->imageId,
-                           'flavorId' => (int) $this->_apiResponse->server->flavorId,
-                           'hostId' => (string) $this->_apiResponse->server->hostId,
-                           'progress' => (int) $this->_apiResponse->server->progress,
-                           'status' => (string) $this->_apiResponse->server->status,
-                           'addresses' => array(),
-                           'metadata' => array());
-                if (property_exists($this->_apiResponse->server, 'sharedIpGroupId')) {
-                    $this->_apiServers[(int) $this->_apiResponse->server->id]['sharedIpGroupId']
-                        = (string) $this->_apiResponse->server->sharedIpGroupId;
-                }
-                if (property_exists($this->_apiResponse->server, 'addresses')) {
-                    if (property_exists($this->_apiResponse->server->addresses, 'public')) {
-                        foreach ($this->_apiResponse->server->addresses->public as $public) {
-                            $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['public'][]
-                                = (string) $public;
-                        }
-                    }
-                    if (property_exists($this->_apiResponse->server->addresses, 'private')) {
-                        foreach ($this->_apiResponse->server->addresses->private as $private) {
-                            $this->_apiServers[(int) $this->_apiResponse->server->id]['addresses']['private'][]
-                                = (string) $private;
-                        }
-                    }
-                }
-                if (property_exists($this->_apiResponse->server, 'metadata')) {
-                    foreach ($this->_apiResponse->server->metadata as $key => $value) {
-                        $this->_apiServers[(int) $this->_apiResponse->server->id]['metadata'][(string) $key]
-                            = (string) $value;
-                    }
-                }
-                return $this->_apiServers[(int) $this->_apiResponse->server->id];
+                            'name' => (string) $this->_apiResponse->server->name);
             }
+
+            return $this->_apiResponse;
         }
 
         return false;
@@ -461,7 +390,7 @@ class Cloud_Server {
     /**
      * Retrieves currently available servers
      *
-     * @return mixed array containing current servers or false on failure
+     * @return mixed json string containing current servers or false on failure
      */
     public function getServers ()
     {
@@ -469,15 +398,15 @@ class Cloud_Server {
         $this->_doRequest();
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '200') {
-            if (!empty($this->_apiResponse->servers)) {
+            if (property_exists($this->_apiResponse, 'servers')) {
                 // Reset internal server array
                 $this->_apiServers = array();
                 foreach ($this->_apiResponse->servers as $server) {
                     $this->_apiServers[(int) $server->id]['name'] = (string) $server->name;
                 }
-
-                return $this->_apiServers;
             }
+
+            return $this->_apiResponse;
         }
 
         return false;
@@ -486,14 +415,15 @@ class Cloud_Server {
     /**
      * Retrieves current API limits
      *
-     * @return mixed object containing current limits or false on failure
+     * @return mixed json string containing current limits or false on failure
      */
     public function getLimits ()
     {
         $this->_apiResource = '/limits';
         $this->_doRequest();
 
-        if ($this->_apiResponseCode && $this->_apiResponseCode == '200') {
+        if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
+                || $this->_apiResponseCode == '203')) {
             return $this->_apiResponse;
         }
 
@@ -539,7 +469,7 @@ class Cloud_Server {
      * @param int $serverId id of server you wish to retrieve ips for
      * @param string $type type of addresses to retrieve could be private/public or
      * false for both types.
-     * @return mixed returns array of addresses or false of failure
+     * @return mixed returns json string of server addresses or false of failure
      */
     public function getServerIp ($serverId, $type = false)
     {
@@ -548,24 +478,7 @@ class Cloud_Server {
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-            if ($this->_apiResponse->addresses) {
-                if ($this->_apiResponse->addresses->public) {
-                    unset($this->_apiServers[(int) $serverId]['addresses']['public']);
-                    foreach ($this->_apiResponse->addresses->public as $public) {
-                        $this->_apiServers[(int) $serverId]['addresses']['public'][]
-                            = (string) $public;
-                    }
-                }
-                if ($this->_apiResponse->addresses->private) {
-                    unset($this->_apiServers[(int) $serverId]['addresses']['private']);
-                    foreach ($this->_apiResponse->addresses->private as $private) {
-                        $this->_apiServers[(int) $serverId]['addresses']['private'][]
-                            = (string) $private;
-                    }
-                }
-
-                return $this->_apiServers[(int) $serverId]['addresses'];
-            }
+            return $this->_apiResponse;
         }
 
         return false;
@@ -576,7 +489,7 @@ class Cloud_Server {
      *
      * @param string $name name of shared ip group you are creating
      * @param int $serverId id of server you wish to add to this group
-     * @return mixed returns id of created shared ip group or false on failure
+     * @return mixed returns json string containing id of created shared ip group or false on failure
      */
     public function addSharedIpGroup ($name, $serverId)
     {
@@ -587,11 +500,7 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_POST);
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '201') {
-            if (property_exists($this->_apiResponse, 'sharedIpGroup')) {
-                $this->_apiServers[(int) $serverId]['sharedIpGroupId']
-                       = (int) $this->_apiResponse->sharedIpGroup->id;
-                return $this->_apiServers[(int) $serverId]['sharedIpGroupId'];
-            }
+            return $this->_apiResponse;
         }
 
         return false;
@@ -609,7 +518,6 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_DELETE);
 
         if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
-            unset($this->_apiIPGroups[(int) $groupId]);
             return true;
         }
 
@@ -621,7 +529,8 @@ class Cloud_Server {
      *
      * @param int $groupId id of specific shared group you wish to retrieve details
      * for
-     * @return mixed returns array containing details about requested group or false on failure
+     * @return mixed returns json string containing details about requested group
+     * or false on failure
      */
     public function getSharedIpGroup ($groupId)
     {
@@ -630,21 +539,7 @@ class Cloud_Server {
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-             if (property_exists($this->_apiResponse, 'sharedIpGroup')) {
-                $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id] = array(
-                      'servers' => array(),
-                      'name' => (string) $this->_apiResponse->sharedIpGroup->name,
-                      'id' => (int) $this->_apiResponse->sharedIpGroup->id);
-
-                if (property_exists($this->_apiResponse->sharedIpGroup, 'servers')) {
-                    foreach ($this->_apiResponse->sharedIpGroup->servers as $server) {
-                        $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id]['servers'][]
-                              = (int) $server;
-                    }
-                }
-
-                return $this->_apiIPGroups[(int) $this->_apiResponse->sharedIpGroup->id];
-            }
+            return $this->_apiResponse;
         }
 
         return false;
@@ -654,7 +549,7 @@ class Cloud_Server {
      * Retrieve all the available shared IP groups
      *
      * @param bool $isDetailed should response contain an array of servers group has
-     * @return mixed returns array of groups or false on failure
+     * @return mixed returns json string of groups or false on failure
      */
     public function getSharedIpGroups ($isDetailed = false)
     {
@@ -663,23 +558,7 @@ class Cloud_Server {
 
         if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-             if (property_exists($this->_apiResponse, 'sharedIpGroups')) {
-                 foreach ($this->_apiResponse->sharedIpGroups as $sharedIpGroup) {
-                    $this->_apiIPGroups[(int) $sharedIpGroup->id] = array(
-                          'name' => (string) $sharedIpGroup->name,
-                          'id' => (int) $sharedIpGroup->id);
-
-                    if ($isDetailed && property_exists($sharedIpGroup, 'servers')) {
-                        $this->_apiIPGroups[(int) $sharedIpGroup->id]['servers'] = array();
-                        foreach ($sharedIpGroup->servers as $server) {
-                            $this->_apiIPGroups[(int) $sharedIpGroup->id]['servers'][]
-                                  = (int) $server;
-                        }
-                    }
-                 }
-
-                return $this->_apiIPGroups;
-            }
+        	return $this->_apiResponse;
         }
 
         return false;
@@ -689,7 +568,7 @@ class Cloud_Server {
      * Retrieve back-up schedule for a specific server
      *
      * @param int $serverId id of server you wish to retrieve back-up schedule for
-     * @return mixed returns array of current back-up schedule or false on failure
+     * @return mixed returns json string of current back-up schedule or false on failure
      */
     public function getBackupSchedule ($serverId)
     {
@@ -698,14 +577,7 @@ class Cloud_Server {
 
 	    if ($this->_apiResponseCode && ($this->_apiResponseCode == '200'
                 || $this->_apiResponseCode == '203')) {
-
-            if (property_exists($this->_apiResponse, 'backupSchedule')) {
-                    $this->_apiServers[(int) $serverId]['backup'] = array(
-                          'enabled' => (bool) ($this->_apiResponse->backupSchedule->enabled ? true : false),
-                          'daily' => (string) $this->_apiResponse->backupSchedule->daily,
-                          'weekly' => (string) $this->_apiResponse->backupSchedule->weekly);
-                return $this->_apiServers[(int) $serverId]['backup'];
-            }
+            return $this->_apiResponse;
 	    }
 
         return false;
@@ -742,10 +614,6 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_POST);
 
 	    if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
-	        $this->_apiServers[(int) $serverId]['backup'] = array(
-	                'enabled' => (bool) $isEnabled,
-	                'daily' => (string) $daily,
-	                'weekly' => (string) $weekly);
             return true;
 	    }
 
@@ -765,11 +633,6 @@ class Cloud_Server {
         $this->_doRequest(self::METHOD_DELETE);
 
 	    if ($this->_apiResponseCode && $this->_apiResponseCode == '204') {
-	        if (array_key_exists((int) $serverId, $this->_apiServers)
-                    && array_key_exists('backup', $this->_apiServers[(int) $serverId])) {
-	            unset($this->_apiServers[(int) $serverId]['backup']);
-	        }
-
             return true;
 	    }
 
@@ -783,7 +646,7 @@ class Cloud_Server {
      * @param int $imageId server image you wish to use
      * @param int $flavorId server flavor you wish to use
      * @param int $groupId optional group id of server cluster
-     * @return mixed returns array of server's configuration or false on failure
+     * @return mixed returns xml string of server's configuration or false on failure
      */
     public function createServer ($name, $imageId, $flavorId, $groupId = false)
     {
@@ -793,9 +656,7 @@ class Cloud_Server {
 
         // We need to check if we are creating a dublicate server name,
         // since creating two servers with same name can cause problems.
-        if (empty($this->_apiServers)) {
-            $this->getServers();
-        }
+        $this->getServers();
 
         foreach ($this->_apiServers as $server) {
             if (strtolower($server['name']) == strtolower($name)) {
@@ -825,38 +686,8 @@ class Cloud_Server {
 
         $this->_doRequest(self::METHOD_POST);
 
-        // If server was created, store it locally
         if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
-
-            // Empty file array
-            $this->_apiFiles = array();
-
-            $serverXml = simplexml_load_string($this->_apiResponse);
-            if (!empty($serverXml)) {
-                $this->_apiServers[(int) $serverXml['id']] =
-                    array('name' => (string) $serverXml['name'],
-                            'imageId' => (int) $serverXml['imageId'],
-                            'flavorId' => (int) $serverXml['flavorId'],
-                            'hostId' => (string) $serverXml['hostId'],
-                            'progress' => (int) $serverXml['progress'],
-                            'status' => (string) $serverXml['status'],
-                            'sharedIpGroupId' => (int) $serverXml['sharedIpGroupId'],
-                            'addresses' => array(),
-                            'metadata' => array());
-                if ($serverXml->addresses->public) {
-                    foreach ($serverXml->addresses->public as $public) {
-                        $this->_apiServers[(int) $serverXml['id']]['addresses']['public'][]
-                            = (string) $public->ip['addr'];
-                    }
-                }
-                if ($serverXml->addresses->private) {
-                    foreach ($serverXml->addresses->private as $private) {
-                        $this->_apiServers[(int) $serverXml['id']]['addresses']['private'][]
-                            = (string) $private->ip['addr'];
-                    }
-                }
-                return $this->_apiServers[(int) $serverXml['id']];
-            }
+            return $this->_apiResponse;
         }
 
         return false;
@@ -890,13 +721,8 @@ class Cloud_Server {
                                     'adminPass' => (string) $password));
         $this->_doRequest(self::METHOD_PUT);
 
-
-        // If server was updated, update it locally
         if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
-            $this->_apiServers[(int) $serverId]['name']= (string) $name;
-            $this->_apiServers[(int) $serverId]['adminPass']= (string) $password;
-
-            return $this->_apiServers[(int) $serverId];
+            return true;
         }
 
         return false;
@@ -913,9 +739,8 @@ class Cloud_Server {
         $this->_apiResource = '/servers/'. (int) $serverId;
         $this->_doRequest(self::METHOD_DELETE);
 
-        // If server was deleted, update it locally
+        // If server was deleted
         if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
-            unset($this->_apiServers[(int) $serverId]);
             return true;
         }
 
@@ -938,7 +763,6 @@ class Cloud_Server {
 
         // If rebuild request is successful
         if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
-            $this->_apiServers[(int) $serverId]['imageId'] = (int) $imageId;
             return true;
         }
 
@@ -958,9 +782,8 @@ class Cloud_Server {
                                     'flavorId' => (int) $flavorId));
         $this->_doRequest(self::METHOD_PUT);
 
-        // If confirmation is successful update internal server array
+        // If confirmation is successful
         if ($this->_apiResponseCode && $this->_apiResponseCode == '202') {
-            $this->_apiServers[(int) $serverId]['flavorId'] = (int) $flavorId;
             return true;
         }
 
