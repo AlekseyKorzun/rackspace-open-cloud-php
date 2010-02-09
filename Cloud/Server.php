@@ -603,7 +603,7 @@ class Cloud_Server {
         }
 
         if (!in_array((string) strtoupper($daily), $this->_apiBackup['daily'])) {
-            throw new Cloud_Exception ('Passed weekly back-up parameter is not supported');
+            throw new Cloud_Exception ('Passed daily back-up parameter is not supported');
         }
 
         $this->_apiResource = '/servers/'. (int) $serverId .'/backup_schedule';
