@@ -685,7 +685,7 @@ class Cloud_Server {
         }
 
         if (is_numeric($groupId)) {
-            array_push($this->_apiJson['server'], array('sharedIpGroupId' => (int) $groupId));
+			$this->_apiJson['server']['sharedIpGroupId'] = (int) $groupId;
         }
 
         $this->_doRequest(self::METHOD_POST);
