@@ -44,10 +44,8 @@ try {
             };
         }
     }
-    print "<pre>";
     // Get all of created back-up images
     print_r($cloud->getImages());
-    print "</pre>";
 } catch (Cloud_Exception $e) {
     print $e->getMessage();
 }
