@@ -286,7 +286,8 @@ class Server {
             curl_setopt($curl, CURLOPT_VERBOSE, 1);
         }
 
-        $this->_apiResponse = curl_exec($curl);
+         $response = curl_exec($curl);
+         $this->_apiResponse = json_decode($response);
 
         // Also for debugging purposes output response we got
         if ($this->_enableDebug) {
