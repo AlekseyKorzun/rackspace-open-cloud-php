@@ -24,9 +24,18 @@ try {
     // Initialize connection
     $cloud = new Server(API_ID, API_KEY);
     // Retrieve all of available servers
-    $servers = $cloud->getServers();
+    $servers_response = $cloud->getServers();
     // If list of servers was successfully retrieved we should now have an array
     // of servers that we can loop throught and create back-up images
+    $servers = array();
+    
+    if (property_exists($servers_response, 'servers')) {
+      
+      foreach($servers_response->servers as $server) {
+        $servers[(int) $server->id]['name'] = (string) $server->name;
+      }
+    }
+    
     if (is_array($servers) && !empty($servers)) {
         foreach ($servers as $serverId => $server) {
             // Create back-up images
