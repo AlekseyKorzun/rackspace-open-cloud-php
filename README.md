@@ -7,8 +7,8 @@ Based on specifications released by Rackspace®
 
 Feel free to extend and modify it to fit your frameworks / applications needs.
 
--100% phpDocumentator 2 code coverage
--100% PSR-2 code coverage
+- 100% phpDocumentator 2 code coverage
+- 100% PSR-2 code coverage
 
 Usage
 -----
