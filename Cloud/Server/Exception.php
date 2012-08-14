@@ -4,8 +4,9 @@ namespace Library\Cloud\Server;
 /**
  * Cloud exception
  *
- * @package cloud
- * @version 0.2
+ * @package	Cloud
+ * @subpackage Cloud\Exception
+ * @version 0.3
  * @license bsd
  * @author Aleksey Korzun <al.ko@webfoundation.net>
  * @link http://github.com/AlekseyKorzun/php-cloudservers/
@@ -14,3 +15,4 @@ namespace Library\Cloud\Server;
 class Exception extends \Exception
 {
 }
+

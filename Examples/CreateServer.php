@@ -1,12 +1,10 @@
 <?php
-namespace Examples;
-use Library\Cloud\Server;
-
 /**
  * Sample code for creating a new server on Rackspace Cloud
  *
- * @package examples
- * @version 0.2
+ * @package Cloud
+ * @subpackage Cloud\Examples
+ * @version 0.3
  * @license bsd
  * @author Aleksey Korzun <al.ko@webfoundation.net>
  * @link http://github.com/AlekseyKorzun/php-cloudservers/
@@ -19,17 +17,18 @@ DEFINE('API_ID', '');
 DEFINE('API_KEY', '');
 
 try {
-    // Initialize connection
-    $cloud = new Server(API_ID, API_KEY);
-    // Add custom MOTD file to our server
-    $cloud->addServerFile('/etc/motd', 'This is a custom MOTD user(s) will see upon login');
-    // Create a new server
-    $server = $cloud->createServer('Server Name', 2, 1);
-    // If server was successfully created we should now have an array
-    // of server details that you can use to populate local database, etc
-    if (is_array($server) && !empty($server)) {
-        print_r($server);
-    }
-} catch (Cloud_Exception $e) {
-    print $e->getMessage();
+	// Initialize connection
+	$cloud = new Server(API_ID, API_KEY);
+	// Add custom MOTD file to our server
+	$cloud->addServerFile('/etc/motd', 'This is a custom MOTD user(s) will see upon login');
+	// Create a new server
+	$server = $cloud->createServer('Server Name', 2, 1);
+	// If server was successfully created we should now have an array
+	// of server details that you can use to populate local database, etc
+	if (is_array($server) && !empty($server)) {
+		print_r($server);
+	}
+} catch (Exception $exception) {
+	print $exception->getMessage();
 }
+

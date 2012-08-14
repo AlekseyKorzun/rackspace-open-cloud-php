@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a8" title="">
+  <file path="Server.php" hash="ad505deef42b12c8697030f44589fcc6" package="Default">
+    <namespace-alias name="Exception">Library\Cloud\Server\Exception</namespace-alias>
+    <include line="9" type="Require" package="Default">
+      <name>Server/Exception.php</name>
+      <docblock line="6">
+        <description><![CDATA[If you are using autoloader (like you should!) remove this include]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <class final="false" abstract="false" namespace="Library\Cloud" line="34" package="Cloud">
+      <extends/>
+      <name>Server</name>
+      <full_name>\Library\Cloud\Server</full_name>
+      <docblock line="11">
+        <description><![CDATA[PHP Cloud Server implementation for RackSpace (tm)]]></description>
+        <long-description><![CDATA[<p>THIS SOFTWARE IS PROVIDED "AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.</p>
+
+<p>IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>]]></long-description>
+        <tag line="11" name="throws" description="" type="\Library\Cloud\Server\Exception">
+          <type by_reference="false">\Library\Cloud\Server\Exception</type>
+        </tag>
+        <tag line="11" name="package" description="Cloud"/>
+        <tag line="11" name="version" description="0.3"/>
+        <tag line="11" name="license" description="bsd"/>
+        <tag line="11" name="author" description="Aleksey Korzun &lt;al.ko@webfoundation.net&gt;"/>
+        <tag line="11" name="link" description="http://github.com/AlekseyKorzun/php-cloudservers/" link="http://github.com/AlekseyKorzun/php-cloudservers/"/>
+        <tag line="11" name="link" description="http://www.alekseykorzun.com" link="http://www.alekseykorzun.com"/>
+      </docblock>
+      <constant namespace="Library\Cloud" line="41" package="Cloud">
+        <name>METHOD_AUTH</name>
+        <full_name>METHOD_AUTH</full_name>
+        <value><![CDATA[1]]></value>
+        <docblock line="36">
+          <description><![CDATA[Authentication method]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="36" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Library\Cloud" line="48" package="Cloud">
+        <name>METHOD_POST</name>
+        <full_name>METHOD_POST</full_name>
+        <value><![CDATA[2]]></value>
+        <docblock line="43">
+          <description><![CDATA[Post method]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="43" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Library\Cloud" line="55" package="Cloud">
+        <name>METHOD_DELETE</name>
+        <full_name>METHOD_DELETE</full_name>
+        <value><![CDATA[3]]></value>
+        <docblock line="50">
+          <description><![CDATA[Delete method]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="50" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Library\Cloud" line="62" package="Cloud">
+        <name>METHOD_PUT</name>
+        <full_name>METHOD_PUT</full_name>
+        <value><![CDATA[4]]></value>
+        <docblock line="57">
+          <description><![CDATA[Put method]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="57" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Library\Cloud" line="69" package="Cloud">
+        <name>USER_AGENT</name>
+        <full_name>USER_AGENT</full_name>
+        <value><![CDATA['PHP Cloud Server client v0.3']]></value>
+        <docblock line="64">
+          <description><![CDATA[User agent for our client]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="64" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </constant>
+      <property final="false" static="false" visibility="private" line="76" namespace="Library\Cloud" package="Default">
+        <name>$username</name>
+        <default><![CDATA[]]></default>
+        <docblock line="71">
+          <description><![CDATA[API's user credentials]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="71" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="83" namespace="Library\Cloud" package="Default">
+        <name>$key</name>
+        <default><![CDATA[]]></default>
+        <docblock line="78">
+          <description><![CDATA[Private key]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="78" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="89" namespace="Library\Cloud" package="Default">
+        <name>$token</name>
+        <default><![CDATA[]]></default>
+        <docblock line="85">
+          <description><![CDATA[Token issued by API server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="85" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="96" namespace="Library\Cloud" package="Default">
+        <name>$serverUri</name>
+        <default><![CDATA[]]></default>
+        <docblock line="91">
+          <description><![CDATA[Internal storage for server management URI]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="91" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="103" namespace="Library\Cloud" package="Default">
+        <name>$authUris</name>
+        <default><![CDATA[array('UK' => 'https://lon.auth.api.rackspacecloud.com/v1.0', 'US' => 'https://auth.api.rackspacecloud.com/v1.0')]]></default>
+        <docblock line="98">
+          <description><![CDATA[Internal storage for authentication URI's]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="98" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="113" namespace="Library\Cloud" package="Default">
+        <name>$location</name>
+        <default><![CDATA[]]></default>
+        <docblock line="108">
+          <description><![CDATA[Location of API]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="108" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="120" namespace="Library\Cloud" package="Default">
+        <name>$backupSchedules</name>
+        <default><![CDATA[array('weekly' => array('DISABLED', 'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'), 'daily' => array('DISABLED', 'H_0000_0200', 'H_0200_0400', 'H_0400_0600', 'H_0600_0800', 'H_0800_1000', 'H_1000_1200', 'H_1400_1600', 'H_1600_1800', 'H_1800_2000', 'H_2000_2200', 'H_2200_0000'))]]></default>
+        <docblock line="115">
+          <description><![CDATA[Hard coded back up schedules]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="115" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="152" namespace="Library\Cloud" package="Default">
+        <name>$resource</name>
+        <default><![CDATA[]]></default>
+        <docblock line="147">
+          <description><![CDATA[Dynamic API resource (end-point)]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="147" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="159" namespace="Library\Cloud" package="Default">
+        <name>$request</name>
+        <default><![CDATA[]]></default>
+        <docblock line="154">
+          <description><![CDATA[Generated JSON data we send off to API]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="154" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="166" namespace="Library\Cloud" package="Default">
+        <name>$response</name>
+        <default><![CDATA[]]></default>
+        <docblock line="161">
+          <description><![CDATA[Stored response we received back from API]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="161" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="173" namespace="Library\Cloud" package="Default">
+        <name>$responseCode</name>
+        <default><![CDATA[]]></default>
+        <docblock line="168">
+          <description><![CDATA[Stored response code we recieved back from API]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="168" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="181" namespace="Library\Cloud" package="Default">
+        <name>$servers</name>
+        <default><![CDATA[array()]]></default>
+        <docblock line="175">
+          <description><![CDATA[Internal array that stores all of the cloud servers you interacted with
+for chained commands]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="175" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="189" namespace="Library\Cloud" package="Default">
+        <name>$files</name>
+        <default><![CDATA[array()]]></default>
+        <docblock line="183">
+          <description><![CDATA[Internal array that stores all of the files you interacted with
+for chained commands]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="183" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="196" namespace="Library\Cloud" package="Default">
+        <name>$enableDebug</name>
+        <default><![CDATA[false]]></default>
+        <docblock line="191">
+          <description><![CDATA[Debugging flag]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="191" name="var" description="" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="207" package="Cloud">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="198">
+          <description><![CDATA[Class constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="198" name="throws" description="" type="\Library\Cloud\Server\Exception">
+            <type by_reference="false">\Library\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="198" name="param" description="user id that will be used for API" type="string" variable="$username">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="198" name="param" description="key that was generated by Rackspace" type="string" variable="$key">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="198" name="param" description="location of API use wish to use" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="198" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="207">
+          <name>$username</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="207">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="207">
+          <name>$location</name>
+          <default><![CDATA['US']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="223" package="Cloud">
+        <name>getToken</name>
+        <full_name>getToken</full_name>
+        <docblock line="218">
+          <description><![CDATA[Get authentication token]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="218" name="return" description="return authentication token or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="238" package="Cloud">
+        <name>setToken</name>
+        <full_name>setToken</full_name>
+        <docblock line="232">
+          <description><![CDATA[Set authentication token]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="232" name="param" description="token you wish to set" type="string" variable="$tokenId">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="232" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="238">
+          <name>$tokenId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="248" package="Cloud">
+        <name>authenticate</name>
+        <full_name>authenticate</full_name>
+        <docblock line="243">
+          <description><![CDATA[Perform authentication]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="243" name="return" description="returns recieved token" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="Library\Cloud" line="261" package="Cloud">
+        <name>request</name>
+        <full_name>request</full_name>
+        <docblock line="254">
+          <description><![CDATA[Performs cURL requests (POST,PUT,DELETE,GET) required by API.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="254" name="throws" description="" type="\Library\Cloud\Server\Exception">
+            <type by_reference="false">\Library\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="254" name="param" description="HTTP method that will be used for current request" type="string" variable="$method">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="254" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="261">
+          <name>$method</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="Library\Cloud" line="377" package="Cloud">
+        <name>requestAuth</name>
+        <full_name>requestAuth</full_name>
+        <docblock line="367">
+          <description><![CDATA[This method is used for processing authentication response.]]></description>
+          <long-description><![CDATA[<p>Basically we retrieve authentication token and server management
+URI from returned headers.</p>]]></long-description>
+          <tag line="367" name="param" description="instance of cURL" type="mixed" variable="$curl">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="367" name="param" description="" type="string" variable="$header">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="367" name="return" description="length of header" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+        <argument line="377">
+          <name>$curl</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="377">
+          <name>$header</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="394" package="Cloud">
+        <name>enableDebug</name>
+        <full_name>enableDebug</full_name>
+        <docblock line="389">
+          <description><![CDATA[Enables debugging output]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="389" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="404" package="Cloud">
+        <name>disableDebug</name>
+        <full_name>disableDebug</full_name>
+        <docblock line="399">
+          <description><![CDATA[Disable debugging output]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="399" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="416" package="Cloud">
+        <name>getFlavor</name>
+        <full_name>getFlavor</full_name>
+        <docblock line="409">
+          <description><![CDATA[Retrieves details regarding specific server flavor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="409" name="param" description="id of a flavor you wish to retrieve details for" type="int" variable="$flavorId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="409" name="return" description="returns JSON string containing details for requested flavor or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="416">
+          <name>$flavorId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="435" package="Cloud">
+        <name>getFlavors</name>
+        <full_name>getFlavors</full_name>
+        <docblock line="428">
+          <description><![CDATA[Retrieves all of the available server flavors]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="428" name="param" description="requested detailed description of server flavors" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="428" name="return" description="returns json string containing available server configurations or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="435">
+          <name>$isDetailed</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="456" package="Cloud">
+        <name>createImage</name>
+        <full_name>createImage</full_name>
+        <docblock line="447">
+          <description><![CDATA[Creates a new image of server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="447" name="param" description="name of new image" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="447" name="param" description="server id for which you wish to base this image on" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="447" name="return" description="returns json string containing details of created image or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="456">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="456">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="481" package="Cloud">
+        <name>getImage</name>
+        <full_name>getImage</full_name>
+        <docblock line="475">
+          <description><![CDATA[Retrieves details of specific image]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="475" name="param" description="id of image you wish to retrieve details for" type="int" variable="$imageId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="475" name="return" description="string containing details of requested image" type="\Library\Cloud\json">
+            <type by_reference="false">\Library\Cloud\json</type>
+          </tag>
+        </docblock>
+        <argument line="481">
+          <name>$imageId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="501" package="Cloud">
+        <name>getImages</name>
+        <full_name>getImages</full_name>
+        <docblock line="493">
+          <description><![CDATA[Retrieves all of the available images]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="493" name="param" description="should API return more detailed image descriptions for available images" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="493" name="return" description="returns json string of available images or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="501">
+          <name>$isDetailed</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="520" package="Cloud">
+        <name>getServer</name>
+        <full_name>getServer</full_name>
+        <docblock line="513">
+          <description><![CDATA[Retrieves configuration details for specific server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="513" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="513" name="return" description="json string containing server details or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="520">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="546" package="Cloud">
+        <name>getServers</name>
+        <full_name>getServers</full_name>
+        <docblock line="539">
+          <description><![CDATA[Retrieves currently available servers]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="539" name="param" description="should API return more detailed server descriptions for available servers" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="539" name="return" description="json string containing current servers or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="546">
+          <name>$isDetailed</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="571" package="Cloud">
+        <name>getLimits</name>
+        <full_name>getLimits</full_name>
+        <docblock line="566">
+          <description><![CDATA[Retrieves current API limits]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="566" name="return" description="json string containing current limits or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="592" package="Cloud">
+        <name>shareServerIp</name>
+        <full_name>shareServerIp</full_name>
+        <docblock line="583">
+          <description><![CDATA[Share servers IP address]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="583" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="583" name="param" description="IP you wish to unshare" type="string" variable="$serverIp">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="583" name="param" description="optional group id of shared server" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="583" name="param" description="automaticly configure server" type="int" variable="$doConfigure">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="583" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="592">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="592">
+          <name>$serverIp</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="592">
+          <name>$groupId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="592">
+          <name>$doConfigure</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="615" package="Cloud">
+        <name>unshareServerIp</name>
+        <full_name>unshareServerIp</full_name>
+        <docblock line="608">
+          <description><![CDATA[Removes a shared server IP from server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="608" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="608" name="param" description="IP you wish to unshare" type="string" variable="$serverIp">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="608" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="615">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="615">
+          <name>$serverIp</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="637" package="Cloud">
+        <name>getServerIp</name>
+        <full_name>getServerIp</full_name>
+        <docblock line="628">
+          <description><![CDATA[Get IP's assigned to server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="628" name="param" description="id of server you wish to retrieve ips for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="628" name="param" description="type of addresses to retrieve could be private/public or false for both types." type="string" variable="$type">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="628" name="return" description="returns json string of server addresses or false of failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="637">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="637">
+          <name>$type</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="658" package="Cloud">
+        <name>addSharedIpGroup</name>
+        <full_name>addSharedIpGroup</full_name>
+        <docblock line="650">
+          <description><![CDATA[Add a server to shared ip group]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="650" name="param" description="name of shared ip group you are creating" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="650" name="param" description="id of server you wish to add to this group" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="650" name="return" description="returns json string containing id of created shared ip group or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="658">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="658">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="679" package="Cloud">
+        <name>deleteSharedIpGroup</name>
+        <full_name>deleteSharedIpGroup</full_name>
+        <docblock line="673">
+          <description><![CDATA[Delete shared IP group]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="673" name="param" description="id of group you wish to delete" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="673" name="return" description="returns true on success and false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="679">
+          <name>$groupId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="699" package="Cloud">
+        <name>getSharedIpGroup</name>
+        <full_name>getSharedIpGroup</full_name>
+        <docblock line="691">
+          <description><![CDATA[Retrieve details for specific IP group]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="691" name="param" description="id of specific shared group you wish to retrieve details for" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="691" name="return" description="returns json string containing details about requested group or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="699">
+          <name>$groupId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="718" package="Cloud">
+        <name>getSharedIpGroups</name>
+        <full_name>getSharedIpGroups</full_name>
+        <docblock line="711">
+          <description><![CDATA[Retrieve all the available shared IP groups]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="711" name="param" description="should response contain an array of servers group has" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="711" name="return" description="returns json string of groups or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="718">
+          <name>$isDetailed</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="739" package="Cloud">
+        <name>getBackupSchedule</name>
+        <full_name>getBackupSchedule</full_name>
+        <docblock line="731">
+          <description><![CDATA[Retrieve back-up schedule for a specific server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="731" name="param" description="id of server you wish to retrieve back-up schedule for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="731" name="return" description="returns json string of current back-up schedule or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="739">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="766" package="Cloud">
+        <name>addBackupSchedule</name>
+        <full_name>addBackupSchedule</full_name>
+        <docblock line="752">
+          <description><![CDATA[Create a new back-up schedule for a server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="752" name="throws" description="" type="\Library\Cloud\Server\Exception">
+            <type by_reference="false">\Library\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="752" name="param" description="id of a server this back-up schedule is intended for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="752" name="param" description="day of the week this back-up should run, look at $backupSchedules array and/or documentation for valid parameters" type="string" variable="$weekly">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="752" name="param" description="time of the day this back-up should run, look at $backupSchedules array and/or documentation for valid parameters" type="string" variable="$daily">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="752" name="param" description="should this scheduled back-up be enabled or disabled, default is set to enabled." type="bool" variable="$isEnabled">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="752" name="return" description="true on success and false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="766">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="766">
+          <name>$weekly</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="766">
+          <name>$daily</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="766">
+          <name>$isEnabled</name>
+          <default><![CDATA[true]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="797" package="Cloud">
+        <name>deleteBackupSchedule</name>
+        <full_name>deleteBackupSchedule</full_name>
+        <docblock line="790">
+          <description><![CDATA[Deletes scheduled back-up for specific server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="790" name="param" description="id of server you wish to delete all scheduled back-ups for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="790" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="797">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="820" package="Cloud">
+        <name>createServer</name>
+        <full_name>createServer</full_name>
+        <docblock line="810">
+          <description><![CDATA[Creates a new server on the cloud]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="810" name="param" description="server name, must be unique" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="810" name="param" description="server image you wish to use" type="int" variable="$imageId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="810" name="param" description="server flavor you wish to use" type="int" variable="$flavorId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="810" name="param" description="optional group id of server cluster" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="810" name="return" description="returns json string of server's configuration or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="820">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="820">
+          <name>$imageId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="820">
+          <name>$flavorId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="820">
+          <name>$groupId</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="880" package="Cloud">
+        <name>addServerFile</name>
+        <full_name>addServerFile</full_name>
+        <docblock line="871">
+          <description><![CDATA[Adds file to inject while creating new server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="871" name="param" description="full file path where file will be put (/etc/motd,etc)" type="string" variable="$file">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="871" name="param" description="content of the file (Welcome to my server, etc)" type="string" variable="$content">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="871" name="return" description="returns array of all files pending injection" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="880">
+          <name>$file</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="880">
+          <name>$content</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="895" package="Cloud">
+        <name>updateServer</name>
+        <full_name>updateServer</full_name>
+        <docblock line="886">
+          <description><![CDATA[Update server's name and password]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="886" name="param" description="id of server you wish to update" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="886" name="param" description="new server name" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="886" name="param" description="new server password" type="string" variable="$password">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="886" name="return" description="returns false on failure or server configuration on success" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="895">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="895">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="895">
+          <name>$password</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="916" package="Cloud">
+        <name>deleteServer</name>
+        <full_name>deleteServer</full_name>
+        <docblock line="910">
+          <description><![CDATA[Delete server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="910" name="param" description="id of server you wish to delete" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="910" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="916">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="937" package="Cloud">
+        <name>rebuildServer</name>
+        <full_name>rebuildServer</full_name>
+        <docblock line="929">
+          <description><![CDATA[Rebuild server using another server image]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="929" name="param" description="id of server you wish to rebuild" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="929" name="param" description="id of server image you wish to use for this rebuild" type="int" variable="$imageId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="929" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="937">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="937">
+          <name>$imageId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="959" package="Cloud">
+        <name>resizeServer</name>
+        <full_name>resizeServer</full_name>
+        <docblock line="952">
+          <description><![CDATA[Resize server to another flavor (server configuration)]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="952" name="param" description="id of server you wish to resize" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="952" name="param" description="id of a flavor you wish to use as a starting point" type="int" variable="$flavorId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="952" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="959">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="959">
+          <name>$flavorId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="980" package="Cloud">
+        <name>confirmResize</name>
+        <full_name>confirmResize</full_name>
+        <docblock line="974">
+          <description><![CDATA[Confirm resize of server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="974" name="param" description="id of server this confirmation is for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="974" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="980">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="1000" package="Cloud">
+        <name>revertResize</name>
+        <full_name>revertResize</full_name>
+        <docblock line="994">
+          <description><![CDATA[Revert resize changes]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="994" name="param" description="id of server you wish to revert resize for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="994" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1000">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Library\Cloud" line="1021" package="Cloud">
+        <name>rebootServer</name>
+        <full_name>rebootServer</full_name>
+        <docblock line="1014">
+          <description><![CDATA[Reboots server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="1014" name="param" description="id of server you wish to reboot" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1014" name="param" description="specify what kind of reboot you wish to perform" type="string" variable="$type">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="1014" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1021">
+          <name>$serverId</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="1021">
+          <name>$type</name>
+          <default><![CDATA['soft']]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file Server.php</error>
+    </parse_markers>
+  </file>
+  <file path="Server/Exception.php" hash="0f934753ff808fbb25d4ea13d1a8f70d" package="Default">
+    <class final="false" abstract="false" namespace="Library\Cloud\Server" line="15" package="Cloud\Cloud\Exception">
+      <extends>\Exception</extends>
+      <name>Exception</name>
+      <full_name>\Library\Cloud\Server\Exception</full_name>
+      <docblock line="4">
+        <description><![CDATA[Cloud exception]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="4" name="package" description="Cloud"/>
+        <tag line="4" name="subpackage" description="Cloud\Exception"/>
+        <tag line="4" name="version" description="0.3"/>
+        <tag line="4" name="license" description="bsd"/>
+        <tag line="4" name="author" description="Aleksey Korzun &lt;al.ko@webfoundation.net&gt;"/>
+        <tag line="4" name="link" description="http://github.com/AlekseyKorzun/php-cloudservers/" link="http://github.com/AlekseyKorzun/php-cloudservers/"/>
+        <tag line="4" name="link" description="http://www.alekseykorzun.com" link="http://www.alekseykorzun.com"/>
+      </docblock>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file Server/Exception.php</error>
+    </parse_markers>
+  </file>
+  <package name="Cloud" full_name="Cloud">
+    <package name="Cloud" full_name="Cloud\Cloud">
+      <package name="Exception" full_name="Cloud\Cloud\Exception"/>
+    </package>
+  </package>
+  <package name="Default" full_name="Default"/>
+  <namespace name="Library" full_name="Library">
+    <namespace name="Cloud" full_name="Library\Cloud">
+      <namespace name="Server" full_name="Library\Cloud\Server"/>
+    </namespace>
+  </namespace>
+  <marker count="0">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>

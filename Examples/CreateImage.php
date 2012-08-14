@@ -1,14 +1,12 @@
 <?php
-namespace Examples;
-use Library\Cloud\Server;
-
 /**
  * Sample code for creating back-ups of all servers, this is just proof-of-concept,
  * if you really need to back-up all of your servers you can create back-up
  * schedule using addBackupSchedule() method.
  *
- * @package examples
- * @version 0.2
+ * @package Cloud
+ * @subpackage Cloud\Examples
+ * @version 0.3
  * @license bsd
  * @author Aleksey Korzun <al.ko@webfoundation.net>
  * @link http://github.com/AlekseyKorzun/php-cloudservers/
@@ -21,22 +19,23 @@ DEFINE('API_ID', '');
 DEFINE('API_KEY', '');
 
 try {
-    // Initialize connection
-    $cloud = new Server(API_ID, API_KEY);
-    // Retrieve all of available servers
-    $servers = $cloud->getServers();
-    // If list of servers was successfully retrieved we should now have an array
-    // of servers that we can loop throught and create back-up images
-    if (is_array($servers) && !empty($servers)) {
-        foreach ($servers as $serverId => $server) {
-            // Create back-up images
-            if(!$cloud->createImage('Back up for: '. $server['name'], $serverId)) {
-                print 'Failed to back up server #: '. $serverId;
-            };
-        }
-    }
-    // Get all of created back-up images
-    print_r($cloud->getImages());
-} catch (Cloud_Exception $e) {
-    print $e->getMessage();
+	// Initialize connection
+	$cloud = new Server(API_ID, API_KEY);
+	// Retrieve all of available servers
+	$servers = $cloud->getServers();
+	// If list of servers was successfully retrieved we should now have an array
+	// of servers that we can loop throught and create back-up images
+	if (is_array($servers) && !empty($servers)) {
+		foreach ($servers as $serverId => $server) {
+			// Create back-up images
+			if (!$cloud->createImage('Back up for: '. $server['name'], $serverId)) {
+				print 'Failed to back up server #: '. $serverId;
+			};
+		}
+	}
+	// Get all of created back-up images
+	print_r($cloud->getImages());
+} catch (Exception $exception) {
+	print $exception->getMessage();
 }
+
