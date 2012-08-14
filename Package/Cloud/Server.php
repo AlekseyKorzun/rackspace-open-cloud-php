@@ -1,12 +1,7 @@
 <?php
-namespace Library\Cloud;
+namespace Cloud;
 
-use Library\Cloud\Server\Exception;
-
-/**
- * If you are using autoloader (like you should!) remove this include
- */
-require 'Server/Exception.php';
+use Cloud\Server\Exception;
 
 /**
  * PHP Cloud Server implementation for RackSpace (tm)

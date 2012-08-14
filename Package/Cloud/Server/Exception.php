@@ -1,5 +1,5 @@
 <?php
-namespace Library\Cloud\Server;
+namespace Cloud\Server;
 
 /**
  * Cloud exception
