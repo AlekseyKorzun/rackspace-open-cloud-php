@@ -64,6 +64,13 @@ class Server
 	const USER_AGENT = 'PHP Cloud Server client v0.3';
 
 	/**
+	 * Retry limit for authentication
+	 *
+	 * @var int
+	 */
+	const ATTEMPT_LIMIT = 3;
+
+	/**
 	 * API's user credentials
 	 *
 	 * @var string
@@ -191,6 +198,13 @@ class Server
 	protected $enableDebug = false;
 
 	/**
+	 * Number of authentication attempts
+	 *
+	 * @var int
+	 */
+	protected static $attempts;
+
+	/**
 	 * Class constructor
 	 *
 	 * @throws Exception
@@ -238,12 +252,26 @@ class Server
 	/**
 	 * Perform authentication
 	 *
-	 * @return string returns recieved token
+	 * @return string|bool returns recieved token or false on failure
 	 */
-	public function authenticate ()
+	public function authenticate()
 	{
+		if (self::$attempts > self::ATTEMPT_LIMIT) {
+			throw new Exception(
+				'We were unable to authenticate using provided API credentials'
+			);
+		}
+
+		++self::$attempts;
+
 		$this->request(self::METHOD_AUTH);
-		return $this->token;
+
+		if ($this->responseCode == 204) {
+			self::$attempts = 0;
+			return $this->token;
+		}
+
+		return false;
 	}
 
 	/**
@@ -256,7 +284,7 @@ class Server
 	private function request($method = null)
 	{
 		if (!$this->token && $method != self::METHOD_AUTH) {
-			$this->request(self::METHOD_AUTH);
+			$this->authenticate();
 		}
 
 		$curl = curl_init();
@@ -305,7 +333,7 @@ class Server
 			curl_setopt($curl, CURLOPT_VERBOSE, 1);
 		}
 
-		$this->response = curl_exec($curl);
+		$this->response = json_decode(curl_exec($curl));
 
 		// Also for debugging purposes output response we got
 		if ($this->enableDebug) {
@@ -321,17 +349,24 @@ class Server
 		// Retrieve returned HTTP code and throw exceptions when possible
 		// error occurs
 		$curlInfo = curl_getinfo($curl);
+
 		if (!empty($curlInfo['http_code'])) {
 			$this->responseCode = (int) $curlInfo['http_code'];
+
 			switch ($this->responseCode) {
 				case '401':
 					// User is no longer authorized, re-authenicate with API
-					$this->request(self::METHOD_AUTH);
-					$this->request($method);
+					if ($this->authenticate()) {
+						$this->request($method);
+					}
 					break;
 				case '400':
+					// Handle cloud server faults
+					if (property_exists($this->response, 'cloudServersFault')) {
+						throw new Exception($this->response->cloudServersFault->message);
+					}
 					throw new Exception(
-						'Access is denied for the given request. Check your X-Auth-Token header. The token may have expired.'
+						'Access is denied for the given request. The token may have expired.'
 					);
 					break;
 				case '404':
@@ -346,7 +381,7 @@ class Server
 					break;
 				case '413':
 					throw new Exception(
-						'The server is refusing to process a request because the request entity is larger than the server is willing or able to process.'
+						'The request entity is larger than the server is willing or able to process.'
 					);
 					break;
 				case '500':
@@ -356,6 +391,7 @@ class Server
 					break;
 			}
 		}
+
 		curl_close($curl);
 	}
 
@@ -460,7 +496,7 @@ class Server
 
 		$this->request(self::METHOD_POST);
 
-		if ($this->responseCode == 200) {
+		if ($this->responseCode == 202) {
 			return $this->response;
 		}
 
@@ -488,14 +524,14 @@ class Server
 	/**
 	 * Retrieves all of the available images
 	 *
-	 * @param bool $isDetailed should API return more detailed
-	 * image descriptions for available images
+	 * @param int $serverId id of server you wish to retrieve images for
 	 * @return mixed returns json string of available images or false
 	 * on failure
 	 */
 	public function getImages($isDetailed = false)
 	{
 		$this->resource = '/images' . ($isDetailed ? '/detail' : '');
+
 		$this->request();
 
 		if ($this->responseCode == 200 || $this->responseCode == 203) {
@@ -521,8 +557,10 @@ class Server
 			// Save server names to avoid creating duplicate servers
 			if (property_exists($this->response, 'server')) {
 				$this->servers[(int) $this->response->server->id] =
-					array('id' => (int) $this->response->server->id,
-							'name' => (string) $this->response->server->name);
+					array(
+						'id' => (int) $this->response->server->id,
+						'name' => (string) $this->response->server->name
+					);
 			}
 
 			return $this->response;
@@ -853,6 +891,7 @@ class Server
 		if (is_numeric($groupId)) {
 			$this->request['server']['sharedIpGroupId'] = (int) $groupId;
 		}
+
 
 		$this->request(self::METHOD_POST);
 

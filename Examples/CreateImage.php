@@ -25,20 +25,30 @@ DEFINE('API_KEY', '');
 try {
 	// Initialize connection
 	$cloud = new Cloud\Server(API_ID, API_KEY);
+
 	// Retrieve all of available servers
-	$servers = $cloud->getServers();
+	$response = $cloud->getServers();
+
 	// If list of servers was successfully retrieved we should now have an array
 	// of servers that we can loop throught and create back-up images
-	if (is_array($servers) && !empty($servers)) {
-		foreach ($servers as $serverId => $server) {
+	if ($response) {
+		foreach ($response->servers as $server) {
+			print "Server id: " . $server->id . " \n";
+
 			// Create back-up images
-			if (!$cloud->createImage('Back up for: '. $server['name'], $serverId)) {
-				print 'Failed to back up server #: '. $serverId;
-			};
+			$response = $cloud->createImage("Back up for: " . $server->name, $server->id);
+
+			if (!$response) {
+				print "Failed to back up server #: " . $server->id . "\n";
+				continue;
+			}
+
+			print "Queued back-up process for server id: " . $server->id . " under job id: " . $response->image->id . "\n";
+
+			print_r($cloud->getImages());
 		}
 	}
-	// Get all of created back-up images
-	print_r($cloud->getImages());
+
 } catch (Exception $exception) {
 	print $exception->getMessage();
 }
