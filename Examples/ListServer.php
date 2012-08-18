@@ -1,6 +1,6 @@
 <?php
 /**
- * Sample code for creating a new server on Rackspace Cloud
+ * Sample code for listing current servers.
  *
  * @package Cloud
  * @subpackage Cloud\Examples
@@ -20,21 +20,21 @@ require __DIR__ . '/../vendor/autoload.php';
 DEFINE('API_ID', '');
 DEFINE('API_KEY', '');
 
-// Change these to reflect current flavors/images
-DEFINE('SERVER_IMAGE_ID', 119);
-DEFINE('SERVER_FLAVOR_ID', 1);
-
 try {
 	// Initialize connection
 	$cloud = new Cloud\Server(API_ID, API_KEY);
 
-	// Add custom MOTD file to our server
-	$cloud->addServerFile('/etc/motd', 'This is a custom MOTD user(s) will see upon login');
+	// Retrieve all of available servers with full details
+	$response = $cloud->getServers(true);
 
-	// Create a new server
-	$response = $cloud->createServer('Server Name', SERVER_IMAGE_ID, SERVER_FLAVOR_ID);
+	// If list of servers was successfully retrieved we should now have number
+	// of servers that we can loop throught
 	if ($response) {
-		print "Server created under id: ". $response->server->id . "\n";
+		foreach ($response->servers as $server) {
+			print "Server id: {$server->id} \n";
+			print_r($server);
+			print "\n";
+		}
 	}
 } catch (Exception $exception) {
 	print $exception->getMessage();
