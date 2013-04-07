@@ -1,9 +1,8 @@
 {
-	"name": "cloud/php",
-	"type": "client",
-	"description": "A PHP 5 API client that allows you to interact with Rackspace® Cloud Servers™",
-	"keywords": ["rackspace", "servers", "cloud", "hosting", "php"],
-	"homepage": "https://github.com/AlekseyKorzun/php-cloudservers",
+    "name": "rackspace/cloudservers/php",
+    "description": "A PHP 5 API client that allows you to interact with Rackspace cloud servers"
+    "keywords": ["rackspace", "servers", "cloud", "hosting", "php", "api", "rest", "manage"],
+    "homepage": "https://github.com/AlekseyKorzun/php-cloudservers",
 	"license": "BSD-4-Clause-UC",
 	"authors": [
 		{
