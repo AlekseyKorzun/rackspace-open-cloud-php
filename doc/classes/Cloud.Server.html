@@ -1,0 +1,918 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>phpDocumentor » \Cloud\Server</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">phpDocumentor</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Namespaces</a></li>
+<li><a href="../namespaces/Cloud.html"><i class="icon-th"></i> Cloud</a></li>
+<li><a>Packages</a></li>
+<li><a href="../packages/Cloud.html"><i class="icon-folder-open"></i> Cloud</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">4</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct :: Class constructor"><span class="description">Class constructor</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_addBackupSchedule" title="addBackupSchedule :: Create a new back-up schedule for a server"><span class="description">Create a new back-up schedule for a server</span><pre>addBackupSchedule()</pre></a></li>
+<li class="method public "><a href="#method_addServerFile" title="addServerFile :: Adds file to inject while creating new server"><span class="description">Adds file to inject while creating new server</span><pre>addServerFile()</pre></a></li>
+<li class="method public "><a href="#method_addSharedIpGroup" title="addSharedIpGroup :: Add a server to shared ip group"><span class="description">Add a server to shared ip group</span><pre>addSharedIpGroup()</pre></a></li>
+<li class="method public "><a href="#method_authenticate" title="authenticate :: Perform authentication"><span class="description">Perform authentication</span><pre>authenticate()</pre></a></li>
+<li class="method public "><a href="#method_confirmResize" title="confirmResize :: Confirm resize of server"><span class="description">Confirm resize of server</span><pre>confirmResize()</pre></a></li>
+<li class="method public "><a href="#method_createImage" title="createImage :: Creates a new image of server"><span class="description">Creates a new image of server</span><pre>createImage()</pre></a></li>
+<li class="method public "><a href="#method_createServer" title="createServer :: Creates a new server on the cloud"><span class="description">Creates a new server on the cloud</span><pre>createServer()</pre></a></li>
+<li class="method public "><a href="#method_deleteBackupSchedule" title="deleteBackupSchedule :: Deletes scheduled back-up for specific server"><span class="description">Deletes scheduled back-up for specific server</span><pre>deleteBackupSchedule()</pre></a></li>
+<li class="method public "><a href="#method_deleteServer" title="deleteServer :: Delete server"><span class="description">Delete server</span><pre>deleteServer()</pre></a></li>
+<li class="method public "><a href="#method_deleteSharedIpGroup" title="deleteSharedIpGroup :: Delete shared IP group"><span class="description">Delete shared IP group</span><pre>deleteSharedIpGroup()</pre></a></li>
+<li class="method public "><a href="#method_disableDebug" title="disableDebug :: Disable debugging output"><span class="description">Disable debugging output</span><pre>disableDebug()</pre></a></li>
+<li class="method public "><a href="#method_enableDebug" title="enableDebug :: Enables debugging output"><span class="description">Enables debugging output</span><pre>enableDebug()</pre></a></li>
+<li class="method public "><a href="#method_getBackupSchedule" title="getBackupSchedule :: Retrieve back-up schedule for a specific server"><span class="description">Retrieve back-up schedule for a specific server</span><pre>getBackupSchedule()</pre></a></li>
+<li class="method public "><a href="#method_getFlavor" title="getFlavor :: Retrieves details regarding specific server flavor"><span class="description">Retrieves details regarding specific server flavor</span><pre>getFlavor()</pre></a></li>
+<li class="method public "><a href="#method_getFlavors" title="getFlavors :: Retrieves all of the available server flavors"><span class="description">Retrieves all of the available server flavors</span><pre>getFlavors()</pre></a></li>
+<li class="method public "><a href="#method_getImage" title="getImage :: Retrieves details of specific image"><span class="description">Retrieves details of specific image</span><pre>getImage()</pre></a></li>
+<li class="method public "><a href="#method_getImages" title="getImages :: Retrieves all of the available images"><span class="description">Retrieves all of the available images</span><pre>getImages()</pre></a></li>
+<li class="method public "><a href="#method_getLimits" title="getLimits :: Retrieves current API limits"><span class="description">Retrieves current API limits</span><pre>getLimits()</pre></a></li>
+<li class="method public "><a href="#method_getServer" title="getServer :: Retrieves configuration details for specific server"><span class="description">Retrieves configuration details for specific server</span><pre>getServer()</pre></a></li>
+<li class="method public "><a href="#method_getServerIp" title="getServerIp :: Get IP's assigned to server"><span class="description">Get IP's assigned to server</span><pre>getServerIp()</pre></a></li>
+<li class="method public "><a href="#method_getServers" title="getServers :: Retrieves currently available servers"><span class="description">Retrieves currently available servers</span><pre>getServers()</pre></a></li>
+<li class="method public "><a href="#method_getSharedIpGroup" title="getSharedIpGroup :: Retrieve details for specific IP group"><span class="description">Retrieve details for specific IP group</span><pre>getSharedIpGroup()</pre></a></li>
+<li class="method public "><a href="#method_getSharedIpGroups" title="getSharedIpGroups :: Retrieve all the available shared IP groups"><span class="description">Retrieve all the available shared IP groups</span><pre>getSharedIpGroups()</pre></a></li>
+<li class="method public "><a href="#method_getToken" title="getToken :: Get authentication token"><span class="description">Get authentication token</span><pre>getToken()</pre></a></li>
+<li class="method public "><a href="#method_rebootServer" title="rebootServer :: Reboots server"><span class="description">Reboots server</span><pre>rebootServer()</pre></a></li>
+<li class="method public "><a href="#method_rebuildServer" title="rebuildServer :: Rebuild server using another server image"><span class="description">Rebuild server using another server image</span><pre>rebuildServer()</pre></a></li>
+<li class="method public "><a href="#method_resizeServer" title="resizeServer :: Resize server to another flavor (server configuration)"><span class="description">Resize server to another flavor (server configuration)</span><pre>resizeServer()</pre></a></li>
+<li class="method public "><a href="#method_revertResize" title="revertResize :: Revert resize changes"><span class="description">Revert resize changes</span><pre>revertResize()</pre></a></li>
+<li class="method public "><a href="#method_setToken" title="setToken :: Set authentication token"><span class="description">Set authentication token</span><pre>setToken()</pre></a></li>
+<li class="method public "><a href="#method_shareServerIp" title="shareServerIp :: Share servers IP address"><span class="description">Share servers IP address</span><pre>shareServerIp()</pre></a></li>
+<li class="method public "><a href="#method_unshareServerIp" title="unshareServerIp :: Removes a shared server IP from server"><span class="description">Removes a shared server IP from server</span><pre>unshareServerIp()</pre></a></li>
+<li class="method public "><a href="#method_updateServer" title="updateServer :: Update server's name and password"><span class="description">Update server's name and password</span><pre>updateServer()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header private">» Private
+                    <ul><li class="method private "><a href="#method_request" title="request :: Performs cURL requests (POST,PUT,DELETE,GET) required by API."><span class="description">Performs cURL requests (POST,PUT,DELETE,GET) required by API.</span><pre>request()</pre></a></li></ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul></ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="property protected "><a href="#property_attempts" title="$attempts :: Number of authentication attempts"><span class="description"></span><pre>$attempts</pre></a></li>
+<li class="property protected "><a href="#property_authUris" title="$authUris :: Internal storage for authentication URI's"><span class="description"></span><pre>$authUris</pre></a></li>
+<li class="property protected "><a href="#property_backupSchedules" title="$backupSchedules :: Hard coded back up schedules"><span class="description"></span><pre>$backupSchedules</pre></a></li>
+<li class="property protected "><a href="#property_enableDebug" title="$enableDebug :: Debugging flag"><span class="description"></span><pre>$enableDebug</pre></a></li>
+<li class="property protected "><a href="#property_files" title="$files :: Internal array that stores all of the files you interacted with
+for chained commands"><span class="description"></span><pre>$files</pre></a></li>
+<li class="property protected "><a href="#property_location" title="$location :: Location of API"><span class="description"></span><pre>$location</pre></a></li>
+<li class="property protected "><a href="#property_request" title="$request :: Generated JSON data we send off to API"><span class="description"></span><pre>$request</pre></a></li>
+<li class="property protected "><a href="#property_resource" title="$resource :: Dynamic API resource (end-point)"><span class="description"></span><pre>$resource</pre></a></li>
+<li class="property protected "><a href="#property_response" title="$response :: Stored response we received back from API"><span class="description"></span><pre>$response</pre></a></li>
+<li class="property protected "><a href="#property_responseCode" title="$responseCode :: Stored response code we recieved back from API"><span class="description"></span><pre>$responseCode</pre></a></li>
+<li class="property protected "><a href="#property_serverUri" title="$serverUri :: Internal storage for server management URI"><span class="description"></span><pre>$serverUri</pre></a></li>
+<li class="property protected "><a href="#property_servers" title="$servers :: Internal array that stores all of the cloud servers you interacted with
+for chained commands"><span class="description"></span><pre>$servers</pre></a></li>
+</ul>
+</li>
+<li class="nav-header private">» Private
+                    <ul>
+<li class="property private "><a href="#property_key" title="$key :: Private key"><span class="description"></span><pre>$key</pre></a></li>
+<li class="property private "><a href="#property_token" title="$token :: Token issued by API server"><span class="description"></span><pre>$token</pre></a></li>
+<li class="property private "><a href="#property_username" title="$username :: API's user credentials"><span class="description"></span><pre>$username</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-constant"></i> Constants
+                    <ul>
+<li class="constant  "><a href="#constant_ATTEMPT_LIMIT" title="ATTEMPT_LIMIT :: Retry limit for authentication"><span class="description">Retry limit for authentication</span><pre>ATTEMPT_LIMIT</pre></a></li>
+<li class="constant  "><a href="#constant_METHOD_AUTH" title="METHOD_AUTH :: Authentication method"><span class="description">Authentication method</span><pre>METHOD_AUTH</pre></a></li>
+<li class="constant  "><a href="#constant_METHOD_DELETE" title="METHOD_DELETE :: Delete method"><span class="description">Delete method</span><pre>METHOD_DELETE</pre></a></li>
+<li class="constant  "><a href="#constant_METHOD_POST" title="METHOD_POST :: Post method"><span class="description">Post method</span><pre>METHOD_POST</pre></a></li>
+<li class="constant  "><a href="#constant_METHOD_PUT" title="METHOD_PUT :: Put method"><span class="description">Put method</span><pre>METHOD_PUT</pre></a></li>
+<li class="constant  "><a href="#constant_USER_AGENT" title="USER_AGENT :: User agent for our client"><span class="description">User agent for our client</span><pre>USER_AGENT</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\Cloud\Server"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/Cloud.html">Cloud</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/Cloud.Server.html">Server</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">PHP Cloud Server implementation for RackSpace (tm)</p>
+<div class="details">
+<div class="long_description"><p>THIS SOFTWARE IS PROVIDED "AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.</p>
+
+<p>IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p></div>
+<table class="table table-bordered">
+<tr>
+<th><code><a href="../classes/Cloud.Server.Exception.html">\Cloud\Server\Exception</a></code></th>
+<td></td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="../packages/Cloud.html">Cloud</a></td>
+</tr>
+<tr>
+<th>version</th>
+<td>0.3</td>
+</tr>
+<tr>
+<th>license</th>
+<td><a href="">bsd</a></td>
+</tr>
+<tr>
+<th>author</th>
+<td><a href="mailto:al.ko@webfoundation.net">Aleksey Korzun</a></td>
+</tr>
+<tr>
+<th>link</th>
+<td><a href="http://github.com/AlekseyKorzun/php-cloudservers/">http://github.com/AlekseyKorzun/php-cloudservers/</a></td>
+</tr>
+<tr>
+<th>link</th>
+<td><a href="http://www.alekseykorzun.com">http://www.alekseykorzun.com</a></td>
+</tr>
+</table>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+<h2>Class constructor</h2>
+<pre>__construct(string $username, string $key, string $location) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$username</h4>
+<code>string</code><p>user id that will be used for API</p></div>
+<div class="subelement argument">
+<h4>$key</h4>
+<code>string</code><p>key that was generated by Rackspace</p></div>
+<div class="subelement argument">
+<h4>$location</h4>
+<code>string</code><p>location of API use wish to use</p></div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code><a href="../classes/Cloud.Server.Exception.html">\Cloud\Server\Exception</a></code></th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_addBackupSchedule"></a><div class="element clickable method public method_addBackupSchedule" data-toggle="collapse" data-target=".method_addBackupSchedule .collapse">
+<h2>Create a new back-up schedule for a server</h2>
+<pre>addBackupSchedule(int $serverId, string $weekly, string $daily, bool $isEnabled) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of a server this back-up schedule is
+intended for</p>
+</div>
+<div class="subelement argument">
+<h4>$weekly</h4>
+<code>string</code><p>day of the week this back-up should run,
+look at $backupSchedules array and/or documentation for valid parameters</p>
+</div>
+<div class="subelement argument">
+<h4>$daily</h4>
+<code>string</code><p>time of the day this back-up should run,
+look at $backupSchedules array and/or documentation for valid parameters</p>
+</div>
+<div class="subelement argument">
+<h4>$isEnabled</h4>
+<code>bool</code><p>should this scheduled back-up be enabled
+or disabled, default is set to enabled.</p>
+</div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code><a href="../classes/Cloud.Server.Exception.html">\Cloud\Server\Exception</a></code></th>
+<td></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>true on success and false on failure</div>
+</div></div>
+</div>
+<a id="method_addServerFile"></a><div class="element clickable method public method_addServerFile" data-toggle="collapse" data-target=".method_addServerFile .collapse">
+<h2>Adds file to inject while creating new server</h2>
+<pre>addServerFile(string $file, string $content) : string[]</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$file</h4>
+<code>string</code><p>full file path where file will
+be put (/etc/motd,etc)</p>
+</div>
+<div class="subelement argument">
+<h4>$content</h4>
+<code>string</code><p>content of the file
+(Welcome to my server, etc)</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string[]</code>returns array of all files pending injection</div>
+</div></div>
+</div>
+<a id="method_addSharedIpGroup"></a><div class="element clickable method public method_addSharedIpGroup" data-toggle="collapse" data-target=".method_addSharedIpGroup .collapse">
+<h2>Add a server to shared ip group</h2>
+<pre>addSharedIpGroup(string $name, int $serverId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>name of shared ip group you are creating</p></div>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to add to this group</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string containing id of created shared
+ip group or false on failure</div>
+</div></div>
+</div>
+<a id="method_authenticate"></a><div class="element clickable method public method_authenticate" data-toggle="collapse" data-target=".method_authenticate .collapse">
+<h2>Perform authentication</h2>
+<pre>authenticate() : string | bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code><code>bool</code>returns recieved token or false on failure</div>
+</div></div>
+</div>
+<a id="method_confirmResize"></a><div class="element clickable method public method_confirmResize" data-toggle="collapse" data-target=".method_confirmResize .collapse">
+<h2>Confirm resize of server</h2>
+<pre>confirmResize(int $serverId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server this confirmation is for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_createImage"></a><div class="element clickable method public method_createImage" data-toggle="collapse" data-target=".method_createImage .collapse">
+<h2>Creates a new image of server</h2>
+<pre>createImage(string $name, int $serverId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>name of new image</p></div>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>server id for which you wish to base this
+image on</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string containing details of created
+image or false on failure</div>
+</div></div>
+</div>
+<a id="method_createServer"></a><div class="element clickable method public method_createServer" data-toggle="collapse" data-target=".method_createServer .collapse">
+<h2>Creates a new server on the cloud</h2>
+<pre>createServer(string $name, int $imageRefId, int $flavorRefId, int $groupId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>server name, must be unique</p></div>
+<div class="subelement argument">
+<h4>$imageRefId</h4>
+<code>int</code><p>server image you wish to use</p></div>
+<div class="subelement argument">
+<h4>$flavorRefId</h4>
+<code>int</code><p>server flavor you wish to use</p></div>
+<div class="subelement argument">
+<h4>$groupId</h4>
+<code>int</code><p>optional group id of server cluster</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string of server's configuration
+or false on failure</div>
+</div></div>
+</div>
+<a id="method_deleteBackupSchedule"></a><div class="element clickable method public method_deleteBackupSchedule" data-toggle="collapse" data-target=".method_deleteBackupSchedule .collapse">
+<h2>Deletes scheduled back-up for specific server</h2>
+<pre>deleteBackupSchedule(int $serverId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to delete all
+scheduled back-ups for</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on failure</div>
+</div></div>
+</div>
+<a id="method_deleteServer"></a><div class="element clickable method public method_deleteServer" data-toggle="collapse" data-target=".method_deleteServer .collapse">
+<h2>Delete server</h2>
+<pre>deleteServer(int $serverId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to delete</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_deleteSharedIpGroup"></a><div class="element clickable method public method_deleteSharedIpGroup" data-toggle="collapse" data-target=".method_deleteSharedIpGroup .collapse">
+<h2>Delete shared IP group</h2>
+<pre>deleteSharedIpGroup(int $groupId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$groupId</h4>
+<code>int</code><p>id of group you wish to delete</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success and false on failure</div>
+</div></div>
+</div>
+<a id="method_disableDebug"></a><div class="element clickable method public method_disableDebug" data-toggle="collapse" data-target=".method_disableDebug .collapse">
+<h2>Disable debugging output</h2>
+<pre>disableDebug() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_enableDebug"></a><div class="element clickable method public method_enableDebug" data-toggle="collapse" data-target=".method_enableDebug .collapse">
+<h2>Enables debugging output</h2>
+<pre>enableDebug() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_getBackupSchedule"></a><div class="element clickable method public method_getBackupSchedule" data-toggle="collapse" data-target=".method_getBackupSchedule .collapse">
+<h2>Retrieve back-up schedule for a specific server</h2>
+<pre>getBackupSchedule(int $serverId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to retrieve back-up
+schedule for</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string of current back-up schedule or
+false on failure</div>
+</div></div>
+</div>
+<a id="method_getFlavor"></a><div class="element clickable method public method_getFlavor" data-toggle="collapse" data-target=".method_getFlavor .collapse">
+<h2>Retrieves details regarding specific server flavor</h2>
+<pre>getFlavor(string $flavorRefId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$flavorRefId</h4>
+<code>string</code><p>id of a flavor you wish to retrieve details for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns JSON string containing details for requested
+flavor or false on failure</div>
+</div></div>
+</div>
+<a id="method_getFlavors"></a><div class="element clickable method public method_getFlavors" data-toggle="collapse" data-target=".method_getFlavors .collapse">
+<h2>Retrieves all of the available server flavors</h2>
+<pre>getFlavors(bool $isDetailed) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$isDetailed</h4>
+<code>bool</code><p>requested detailed description of server flavors</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string containing available server configurations or
+false on failure</div>
+</div></div>
+</div>
+<a id="method_getImage"></a><div class="element clickable method public method_getImage" data-toggle="collapse" data-target=".method_getImage .collapse">
+<h2>Retrieves details of specific image</h2>
+<pre>getImage(string $imageRefId) : \Cloud\json</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$imageRefId</h4>
+<code>string</code><p>id of image you wish to retrieve details for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\Cloud\json</code>string containing details of requested image</div>
+</div></div>
+</div>
+<a id="method_getImages"></a><div class="element clickable method public method_getImages" data-toggle="collapse" data-target=".method_getImages .collapse">
+<h2>Retrieves all of the available images</h2>
+<pre>getImages($isDetailed) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$isDetailed</h4></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string of available images or false
+on failure</div>
+</div></div>
+</div>
+<a id="method_getLimits"></a><div class="element clickable method public method_getLimits" data-toggle="collapse" data-target=".method_getLimits .collapse">
+<h2>Retrieves current API limits</h2>
+<pre>getLimits() : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>json string containing current limits or false on failure</div>
+</div></div>
+</div>
+<a id="method_getServer"></a><div class="element clickable method public method_getServer" data-toggle="collapse" data-target=".method_getServer .collapse">
+<h2>Retrieves configuration details for specific server</h2>
+<pre>getServer(int $serverId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server this action is performed for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>json string containing server details or false
+on failure</div>
+</div></div>
+</div>
+<a id="method_getServerIp"></a><div class="element clickable method public method_getServerIp" data-toggle="collapse" data-target=".method_getServerIp .collapse">
+<h2>Get IP's assigned to server</h2>
+<pre>getServerIp(int $serverId, string $type) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to retrieve ips for</p></div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>string</code><p>type of addresses to retrieve could be
+private/public or false for both types.</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string of server addresses or false
+of failure</div>
+</div></div>
+</div>
+<a id="method_getServers"></a><div class="element clickable method public method_getServers" data-toggle="collapse" data-target=".method_getServers .collapse">
+<h2>Retrieves currently available servers</h2>
+<pre>getServers(bool $isDetailed) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$isDetailed</h4>
+<code>bool</code><p>should API return more detailed server descriptions
+for available servers</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>json string containing current servers or false on failure</div>
+</div></div>
+</div>
+<a id="method_getSharedIpGroup"></a><div class="element clickable method public method_getSharedIpGroup" data-toggle="collapse" data-target=".method_getSharedIpGroup .collapse">
+<h2>Retrieve details for specific IP group</h2>
+<pre>getSharedIpGroup(int $groupId) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$groupId</h4>
+<code>int</code><p>id of specific shared group you wish to
+retrieve details for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string containing details about
+requested group or false on failure</div>
+</div></div>
+</div>
+<a id="method_getSharedIpGroups"></a><div class="element clickable method public method_getSharedIpGroups" data-toggle="collapse" data-target=".method_getSharedIpGroups .collapse">
+<h2>Retrieve all the available shared IP groups</h2>
+<pre>getSharedIpGroups(bool $isDetailed) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$isDetailed</h4>
+<code>bool</code><p>should response contain an array of
+servers group has</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns json string of groups or false on failure</div>
+</div></div>
+</div>
+<a id="method_getToken"></a><div class="element clickable method public method_getToken" data-toggle="collapse" data-target=".method_getToken .collapse">
+<h2>Get authentication token</h2>
+<pre>getToken() : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>return authentication token or false on failure</div>
+</div></div>
+</div>
+<a id="method_rebootServer"></a><div class="element clickable method public method_rebootServer" data-toggle="collapse" data-target=".method_rebootServer .collapse">
+<h2>Reboots server</h2>
+<pre>rebootServer(int $serverId, string $type) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to reboot</p></div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>string</code><p>specify what kind of reboot you wish to perform</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_rebuildServer"></a><div class="element clickable method public method_rebuildServer" data-toggle="collapse" data-target=".method_rebuildServer .collapse">
+<h2>Rebuild server using another server image</h2>
+<pre>rebuildServer(int $serverId, int $imageRefId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to rebuild</p></div>
+<div class="subelement argument">
+<h4>$imageRefId</h4>
+<code>int</code><p>id of server image you wish to use for
+this rebuild</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_resizeServer"></a><div class="element clickable method public method_resizeServer" data-toggle="collapse" data-target=".method_resizeServer .collapse">
+<h2>Resize server to another flavor (server configuration)</h2>
+<pre>resizeServer(int $serverId, int $flavorRefId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to resize</p></div>
+<div class="subelement argument">
+<h4>$flavorRefId</h4>
+<code>int</code><p>id of a flavor you wish to use as a starting point</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_revertResize"></a><div class="element clickable method public method_revertResize" data-toggle="collapse" data-target=".method_revertResize .collapse">
+<h2>Revert resize changes</h2>
+<pre>revertResize(int $serverId) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to revert resize for</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on fail</div>
+</div></div>
+</div>
+<a id="method_setToken"></a><div class="element clickable method public method_setToken" data-toggle="collapse" data-target=".method_setToken .collapse">
+<h2>Set authentication token</h2>
+<pre>setToken(string $tokenId) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$tokenId</h4>
+<code>string</code><p>token you wish to set</p></div>
+</div></div>
+</div>
+<a id="method_shareServerIp"></a><div class="element clickable method public method_shareServerIp" data-toggle="collapse" data-target=".method_shareServerIp .collapse">
+<h2>Share servers IP address</h2>
+<pre>shareServerIp(int $serverId, string $serverIp, int $groupId, int $doConfigure) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server this action is performed for</p></div>
+<div class="subelement argument">
+<h4>$serverIp</h4>
+<code>string</code><p>IP you wish to unshare</p></div>
+<div class="subelement argument">
+<h4>$groupId</h4>
+<code>int</code><p>optional group id of shared server</p></div>
+<div class="subelement argument">
+<h4>$doConfigure</h4>
+<code>int</code><p>automaticly configure server</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on failure</div>
+</div></div>
+</div>
+<a id="method_unshareServerIp"></a><div class="element clickable method public method_unshareServerIp" data-toggle="collapse" data-target=".method_unshareServerIp .collapse">
+<h2>Removes a shared server IP from server</h2>
+<pre>unshareServerIp(int $serverId, string $serverIp) : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server this action is performed for</p></div>
+<div class="subelement argument">
+<h4>$serverIp</h4>
+<code>string</code><p>IP you wish to unshare</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>returns true on success or false on failure</div>
+</div></div>
+</div>
+<a id="method_updateServer"></a><div class="element clickable method public method_updateServer" data-toggle="collapse" data-target=".method_updateServer .collapse">
+<h2>Update server's name and password</h2>
+<pre>updateServer(int $serverId, string $name, string $password) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$serverId</h4>
+<code>int</code><p>id of server you wish to update</p></div>
+<div class="subelement argument">
+<h4>$name</h4>
+<code>string</code><p>new server name</p></div>
+<div class="subelement argument">
+<h4>$password</h4>
+<code>string</code><p>new server password</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>returns false on failure or server configuration
+on success</div>
+</div></div>
+</div>
+<a id="method_request"></a><div class="element clickable method private method_request" data-toggle="collapse" data-target=".method_request .collapse">
+<h2>Performs cURL requests (POST,PUT,DELETE,GET) required by API.</h2>
+<pre>request(string $method) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$method</h4>
+<code>string</code><p>HTTP method that will be used for current request</p></div>
+<h3>Exceptions</h3>
+<table class="table table-bordered"><tr>
+<th><code><a href="../classes/Cloud.Server.Exception.html">\Cloud\Server\Exception</a></code></th>
+<td></td>
+</tr></table>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_attempts"> </a><div class="element clickable property protected property_attempts" data-toggle="collapse" data-target=".property_attempts .collapse">
+<h2></h2>
+<pre>$attempts : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_authUris"> </a><div class="element clickable property protected property_authUris" data-toggle="collapse" data-target=".property_authUris .collapse">
+<h2></h2>
+<pre>$authUris : string[]</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_backupSchedules"> </a><div class="element clickable property protected property_backupSchedules" data-toggle="collapse" data-target=".property_backupSchedules .collapse">
+<h2></h2>
+<pre>$backupSchedules : string[]</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_enableDebug"> </a><div class="element clickable property protected property_enableDebug" data-toggle="collapse" data-target=".property_enableDebug .collapse">
+<h2></h2>
+<pre>$enableDebug : bool</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_files"> </a><div class="element clickable property protected property_files" data-toggle="collapse" data-target=".property_files .collapse">
+<h2></h2>
+<pre>$files : string[]</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_location"> </a><div class="element clickable property protected property_location" data-toggle="collapse" data-target=".property_location .collapse">
+<h2></h2>
+<pre>$location : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_request"> </a><div class="element clickable property protected property_request" data-toggle="collapse" data-target=".property_request .collapse">
+<h2></h2>
+<pre>$request : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_resource"> </a><div class="element clickable property protected property_resource" data-toggle="collapse" data-target=".property_resource .collapse">
+<h2></h2>
+<pre>$resource : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_response"> </a><div class="element clickable property protected property_response" data-toggle="collapse" data-target=".property_response .collapse">
+<h2></h2>
+<pre>$response : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_responseCode"> </a><div class="element clickable property protected property_responseCode" data-toggle="collapse" data-target=".property_responseCode .collapse">
+<h2></h2>
+<pre>$responseCode : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_serverUri"> </a><div class="element clickable property protected property_serverUri" data-toggle="collapse" data-target=".property_serverUri .collapse">
+<h2></h2>
+<pre>$serverUri : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_servers"> </a><div class="element clickable property protected property_servers" data-toggle="collapse" data-target=".property_servers .collapse">
+<h2></h2>
+<pre>$servers : string[]</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_key"> </a><div class="element clickable property private property_key" data-toggle="collapse" data-target=".property_key .collapse">
+<h2></h2>
+<pre>$key : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_token"> </a><div class="element clickable property private property_token" data-toggle="collapse" data-target=".property_token .collapse">
+<h2></h2>
+<pre>$token : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_username"> </a><div class="element clickable property private property_username" data-toggle="collapse" data-target=".property_username .collapse">
+<h2></h2>
+<pre>$username : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-constant"></i> Constants</h3>
+<a id="constant_ATTEMPT_LIMIT"> </a><div class="element clickable constant  constant_ATTEMPT_LIMIT" data-toggle="collapse" data-target=".constant_ATTEMPT_LIMIT .collapse">
+<h2>Retry limit for authentication</h2>
+<pre>ATTEMPT_LIMIT : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="constant_METHOD_AUTH"> </a><div class="element clickable constant  constant_METHOD_AUTH" data-toggle="collapse" data-target=".constant_METHOD_AUTH .collapse">
+<h2>Authentication method</h2>
+<pre>METHOD_AUTH : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="constant_METHOD_DELETE"> </a><div class="element clickable constant  constant_METHOD_DELETE" data-toggle="collapse" data-target=".constant_METHOD_DELETE .collapse">
+<h2>Delete method</h2>
+<pre>METHOD_DELETE : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="constant_METHOD_POST"> </a><div class="element clickable constant  constant_METHOD_POST" data-toggle="collapse" data-target=".constant_METHOD_POST .collapse">
+<h2>Post method</h2>
+<pre>METHOD_POST : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="constant_METHOD_PUT"> </a><div class="element clickable constant  constant_METHOD_PUT" data-toggle="collapse" data-target=".constant_METHOD_PUT .collapse">
+<h2>Put method</h2>
+<pre>METHOD_PUT : int</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="constant_USER_AGENT"> </a><div class="element clickable constant  constant_USER_AGENT" data-toggle="collapse" data-target=".constant_USER_AGENT .collapse">
+<h2>User agent for our client</h2>
+<pre>USER_AGENT : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a13</a> and<br>
+            generated on 2013-04-07T20:28:44+02:00.<br></footer></div>
+</div>
+</body>
+</html>

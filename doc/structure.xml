@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a13" title="">
+  <file path="Server/Exception.php" hash="93bd38fd066b8fa11fa757fd762e5bfc" package="Default">
+    <class final="false" abstract="false" namespace="Cloud\Server" line="15" package="Cloud\Cloud\Exception">
+      <extends>\Exception</extends>
+      <name>Exception</name>
+      <full_name>\Cloud\Server\Exception</full_name>
+      <docblock line="4">
+        <description>Cloud exception</description>
+        <long-description></long-description>
+        <tag line="4" name="package" description="Cloud"/>
+        <tag line="4" name="subpackage" description="Cloud\Exception"/>
+        <tag line="4" name="version" description="0.3"/>
+        <tag line="4" name="license" description="bsd"/>
+        <tag line="4" name="author" description="Aleksey Korzun &lt;al.ko@webfoundation.net&gt;"/>
+        <tag line="4" name="link" description="http://github.com/AlekseyKorzun/php-cloudservers/" link="http://github.com/AlekseyKorzun/php-cloudservers/"/>
+        <tag line="4" name="link" description="http://www.alekseykorzun.com" link="http://www.alekseykorzun.com"/>
+      </docblock>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file Server/Exception.php</error>
+    </parse_markers>
+  </file>
+  <file path="Server.php" hash="85909e8e825bc659f9b85c53c651429d" package="Default">
+    <class final="false" abstract="false" namespace="Cloud" line="29" package="Cloud">
+      <extends/>
+      <name>Server</name>
+      <full_name>\Cloud\Server</full_name>
+      <docblock line="6">
+        <description>PHP Cloud Server implementation for RackSpace (tm)</description>
+        <long-description>&lt;p&gt;THIS SOFTWARE IS PROVIDED "AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.&lt;/p&gt;
+
+&lt;p&gt;IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.&lt;/p&gt;</long-description>
+        <tag line="6" name="throws" description="" type="\Cloud\Server\Exception">
+          <type by_reference="false">\Cloud\Server\Exception</type>
+        </tag>
+        <tag line="6" name="package" description="Cloud"/>
+        <tag line="6" name="version" description="0.3"/>
+        <tag line="6" name="license" description="bsd"/>
+        <tag line="6" name="author" description="Aleksey Korzun &lt;al.ko@webfoundation.net&gt;"/>
+        <tag line="6" name="link" description="http://github.com/AlekseyKorzun/php-cloudservers/" link="http://github.com/AlekseyKorzun/php-cloudservers/"/>
+        <tag line="6" name="link" description="http://www.alekseykorzun.com" link="http://www.alekseykorzun.com"/>
+      </docblock>
+      <constant namespace="Cloud" line="36" package="Cloud">
+        <name>METHOD_AUTH</name>
+        <full_name>METHOD_AUTH</full_name>
+        <value>1</value>
+        <docblock line="31">
+          <description>Authentication method</description>
+          <long-description></long-description>
+          <tag line="31" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Cloud" line="43" package="Cloud">
+        <name>METHOD_POST</name>
+        <full_name>METHOD_POST</full_name>
+        <value>2</value>
+        <docblock line="38">
+          <description>Post method</description>
+          <long-description></long-description>
+          <tag line="38" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Cloud" line="50" package="Cloud">
+        <name>METHOD_DELETE</name>
+        <full_name>METHOD_DELETE</full_name>
+        <value>3</value>
+        <docblock line="45">
+          <description>Delete method</description>
+          <long-description></long-description>
+          <tag line="45" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Cloud" line="57" package="Cloud">
+        <name>METHOD_PUT</name>
+        <full_name>METHOD_PUT</full_name>
+        <value>4</value>
+        <docblock line="52">
+          <description>Put method</description>
+          <long-description></long-description>
+          <tag line="52" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Cloud" line="64" package="Cloud">
+        <name>USER_AGENT</name>
+        <full_name>USER_AGENT</full_name>
+        <value>'PHP Cloud Server client v0.3'</value>
+        <docblock line="59">
+          <description>User agent for our client</description>
+          <long-description></long-description>
+          <tag line="59" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </constant>
+      <constant namespace="Cloud" line="71" package="Cloud">
+        <name>ATTEMPT_LIMIT</name>
+        <full_name>ATTEMPT_LIMIT</full_name>
+        <value>3</value>
+        <docblock line="66">
+          <description>Retry limit for authentication</description>
+          <long-description></long-description>
+          <tag line="66" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </constant>
+      <property final="false" static="false" visibility="private" line="78" namespace="Cloud" package="Default">
+        <name>$username</name>
+        <default></default>
+        <docblock line="73">
+          <description>API's user credentials</description>
+          <long-description></long-description>
+          <tag line="73" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="85" namespace="Cloud" package="Default">
+        <name>$key</name>
+        <default></default>
+        <docblock line="80">
+          <description>Private key</description>
+          <long-description></long-description>
+          <tag line="80" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="91" namespace="Cloud" package="Default">
+        <name>$token</name>
+        <default></default>
+        <docblock line="87">
+          <description>Token issued by API server</description>
+          <long-description></long-description>
+          <tag line="87" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="98" namespace="Cloud" package="Default">
+        <name>$serverUri</name>
+        <default></default>
+        <docblock line="93">
+          <description>Internal storage for server management URI</description>
+          <long-description></long-description>
+          <tag line="93" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="105" namespace="Cloud" package="Default">
+        <name>$authUris</name>
+        <default>array('UK' =&gt; 'https://lon.identity.api.rackspacecloud.com/v2.0', 'US' =&gt; 'https://identity.api.rackspacecloud.com/v2.0')</default>
+        <docblock line="100">
+          <description>Internal storage for authentication URI's</description>
+          <long-description></long-description>
+          <tag line="100" name="var" description="" type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="115" namespace="Cloud" package="Default">
+        <name>$location</name>
+        <default></default>
+        <docblock line="110">
+          <description>Location of API</description>
+          <long-description></long-description>
+          <tag line="110" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="122" namespace="Cloud" package="Default">
+        <name>$backupSchedules</name>
+        <default>array('weekly' =&gt; array('DISABLED', 'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'), 'daily' =&gt; array('DISABLED', 'H_0000_0200', 'H_0200_0400', 'H_0400_0600', 'H_0600_0800', 'H_0800_1000', 'H_1000_1200', 'H_1400_1600', 'H_1600_1800', 'H_1800_2000', 'H_2000_2200', 'H_2200_0000'))</default>
+        <docblock line="117">
+          <description>Hard coded back up schedules</description>
+          <long-description></long-description>
+          <tag line="117" name="var" description="" type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="154" namespace="Cloud" package="Default">
+        <name>$resource</name>
+        <default></default>
+        <docblock line="149">
+          <description>Dynamic API resource (end-point)</description>
+          <long-description></long-description>
+          <tag line="149" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="161" namespace="Cloud" package="Default">
+        <name>$request</name>
+        <default></default>
+        <docblock line="156">
+          <description>Generated JSON data we send off to API</description>
+          <long-description></long-description>
+          <tag line="156" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="168" namespace="Cloud" package="Default">
+        <name>$response</name>
+        <default></default>
+        <docblock line="163">
+          <description>Stored response we received back from API</description>
+          <long-description></long-description>
+          <tag line="163" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="175" namespace="Cloud" package="Default">
+        <name>$responseCode</name>
+        <default></default>
+        <docblock line="170">
+          <description>Stored response code we recieved back from API</description>
+          <long-description></long-description>
+          <tag line="170" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="183" namespace="Cloud" package="Default">
+        <name>$servers</name>
+        <default>array()</default>
+        <docblock line="177">
+          <description>Internal array that stores all of the cloud servers you interacted with
+for chained commands</description>
+          <long-description></long-description>
+          <tag line="177" name="var" description="" type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="191" namespace="Cloud" package="Default">
+        <name>$files</name>
+        <default>array()</default>
+        <docblock line="185">
+          <description>Internal array that stores all of the files you interacted with
+for chained commands</description>
+          <long-description></long-description>
+          <tag line="185" name="var" description="" type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="protected" line="198" namespace="Cloud" package="Default">
+        <name>$enableDebug</name>
+        <default>false</default>
+        <docblock line="193">
+          <description>Debugging flag</description>
+          <long-description></long-description>
+          <tag line="193" name="var" description="" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="true" visibility="protected" line="205" namespace="Cloud" package="Default">
+        <name>$attempts</name>
+        <default></default>
+        <docblock line="200">
+          <description>Number of authentication attempts</description>
+          <long-description></long-description>
+          <tag line="200" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="215" package="Cloud">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="207">
+          <description>Class constructor</description>
+          <long-description></long-description>
+          <tag line="207" name="throws" description="" type="\Cloud\Server\Exception">
+            <type by_reference="false">\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="207" name="param" description="user id that will be used for API" type="string" variable="$username">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="207" name="param" description="key that was generated by Rackspace" type="string" variable="$key">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="207" name="param" description="location of API use wish to use" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="215">
+          <name>$username</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="215">
+          <name>$key</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="215">
+          <name>$location</name>
+          <default>'US'</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="231" package="Cloud">
+        <name>getToken</name>
+        <full_name>getToken</full_name>
+        <docblock line="226">
+          <description>Get authentication token</description>
+          <long-description></long-description>
+          <tag line="226" name="return" description="return authentication token or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="245" package="Cloud">
+        <name>setToken</name>
+        <full_name>setToken</full_name>
+        <docblock line="240">
+          <description>Set authentication token</description>
+          <long-description></long-description>
+          <tag line="240" name="param" description="token you wish to set" type="string" variable="$tokenId">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="245">
+          <name>$tokenId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="255" package="Cloud">
+        <name>authenticate</name>
+        <full_name>authenticate</full_name>
+        <docblock line="250">
+          <description>Perform authentication</description>
+          <long-description></long-description>
+          <tag line="250" name="return" description="returns recieved token or false on failure" type="string|bool">
+            <type by_reference="false">string</type>
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="Cloud" line="318" package="Cloud">
+        <name>request</name>
+        <full_name>request</full_name>
+        <docblock line="312">
+          <description>Performs cURL requests (POST,PUT,DELETE,GET) required by API.</description>
+          <long-description></long-description>
+          <tag line="312" name="throws" description="" type="\Cloud\Server\Exception">
+            <type by_reference="false">\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="312" name="param" description="HTTP method that will be used for current request" type="string" variable="$method">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="318">
+          <name>$method</name>
+          <default>null</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="433" package="Cloud">
+        <name>enableDebug</name>
+        <full_name>enableDebug</full_name>
+        <docblock line="430">
+          <description>Enables debugging output</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="441" package="Cloud">
+        <name>disableDebug</name>
+        <full_name>disableDebug</full_name>
+        <docblock line="438">
+          <description>Disable debugging output</description>
+          <long-description></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="453" package="Cloud">
+        <name>getFlavor</name>
+        <full_name>getFlavor</full_name>
+        <docblock line="446">
+          <description>Retrieves details regarding specific server flavor</description>
+          <long-description></long-description>
+          <tag line="446" name="param" description="id of a flavor you wish to retrieve details for" type="string" variable="$flavorRefId">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="446" name="return" description="returns JSON string containing details for requested&#10;flavor or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="453">
+          <name>$flavorRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="472" package="Cloud">
+        <name>getFlavors</name>
+        <full_name>getFlavors</full_name>
+        <docblock line="465">
+          <description>Retrieves all of the available server flavors</description>
+          <long-description></long-description>
+          <tag line="465" name="param" description="requested detailed description of server flavors" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="465" name="return" description="returns json string containing available server configurations or&#10;false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="472">
+          <name>$isDetailed</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="493" package="Cloud">
+        <name>createImage</name>
+        <full_name>createImage</full_name>
+        <docblock line="484">
+          <description>Creates a new image of server</description>
+          <long-description></long-description>
+          <tag line="484" name="param" description="name of new image" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="484" name="param" description="server id for which you wish to base this&#10;image on" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="484" name="return" description="returns json string containing details of created&#10;image or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="493">
+          <name>$name</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="493">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="518" package="Cloud">
+        <name>getImage</name>
+        <full_name>getImage</full_name>
+        <docblock line="512">
+          <description>Retrieves details of specific image</description>
+          <long-description></long-description>
+          <tag line="512" name="param" description="id of image you wish to retrieve details for" type="string" variable="$imageRefId">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="512" name="return" description="string containing details of requested image" type="\Cloud\json">
+            <type by_reference="false">\Cloud\json</type>
+          </tag>
+        </docblock>
+        <argument line="518">
+          <name>$imageRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="537" package="Cloud">
+        <name>getImages</name>
+        <full_name>getImages</full_name>
+        <docblock line="530">
+          <description>Retrieves all of the available images</description>
+          <long-description></long-description>
+          <tag line="530" name="param" description="id of server you wish to retrieve images for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="530" name="return" description="returns json string of available images or false&#10;on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="537">
+          <name>$isDetailed</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="557" package="Cloud">
+        <name>getServer</name>
+        <full_name>getServer</full_name>
+        <docblock line="550">
+          <description>Retrieves configuration details for specific server</description>
+          <long-description></long-description>
+          <tag line="550" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="550" name="return" description="json string containing server details or false&#10;on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="557">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="584" package="Cloud">
+        <name>getServers</name>
+        <full_name>getServers</full_name>
+        <docblock line="577">
+          <description>Retrieves currently available servers</description>
+          <long-description></long-description>
+          <tag line="577" name="param" description="should API return more detailed server descriptions&#10;for available servers" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="577" name="return" description="json string containing current servers or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="584">
+          <name>$isDetailed</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="609" package="Cloud">
+        <name>getLimits</name>
+        <full_name>getLimits</full_name>
+        <docblock line="604">
+          <description>Retrieves current API limits</description>
+          <long-description></long-description>
+          <tag line="604" name="return" description="json string containing current limits or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="630" package="Cloud">
+        <name>shareServerIp</name>
+        <full_name>shareServerIp</full_name>
+        <docblock line="621">
+          <description>Share servers IP address</description>
+          <long-description></long-description>
+          <tag line="621" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="621" name="param" description="IP you wish to unshare" type="string" variable="$serverIp">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="621" name="param" description="optional group id of shared server" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="621" name="param" description="automaticly configure server" type="int" variable="$doConfigure">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="621" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="630">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="630">
+          <name>$serverIp</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="630">
+          <name>$groupId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="630">
+          <name>$doConfigure</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="656" package="Cloud">
+        <name>unshareServerIp</name>
+        <full_name>unshareServerIp</full_name>
+        <docblock line="649">
+          <description>Removes a shared server IP from server</description>
+          <long-description></long-description>
+          <tag line="649" name="param" description="id of server this action is performed for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="649" name="param" description="IP you wish to unshare" type="string" variable="$serverIp">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="649" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="656">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="656">
+          <name>$serverIp</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="677" package="Cloud">
+        <name>getServerIp</name>
+        <full_name>getServerIp</full_name>
+        <docblock line="668">
+          <description>Get IP's assigned to server</description>
+          <long-description></long-description>
+          <tag line="668" name="param" description="id of server you wish to retrieve ips for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="668" name="param" description="type of addresses to retrieve could be&#10;private/public or false for both types." type="string" variable="$type">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="668" name="return" description="returns json string of server addresses or false&#10;of failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="677">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="677">
+          <name>$type</name>
+          <default>null</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="697" package="Cloud">
+        <name>addSharedIpGroup</name>
+        <full_name>addSharedIpGroup</full_name>
+        <docblock line="689">
+          <description>Add a server to shared ip group</description>
+          <long-description></long-description>
+          <tag line="689" name="param" description="name of shared ip group you are creating" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="689" name="param" description="id of server you wish to add to this group" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="689" name="return" description="returns json string containing id of created shared&#10;ip group or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="697">
+          <name>$name</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="697">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="721" package="Cloud">
+        <name>deleteSharedIpGroup</name>
+        <full_name>deleteSharedIpGroup</full_name>
+        <docblock line="715">
+          <description>Delete shared IP group</description>
+          <long-description></long-description>
+          <tag line="715" name="param" description="id of group you wish to delete" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="715" name="return" description="returns true on success and false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="721">
+          <name>$groupId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="741" package="Cloud">
+        <name>getSharedIpGroup</name>
+        <full_name>getSharedIpGroup</full_name>
+        <docblock line="733">
+          <description>Retrieve details for specific IP group</description>
+          <long-description></long-description>
+          <tag line="733" name="param" description="id of specific shared group you wish to&#10;retrieve details for" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="733" name="return" description="returns json string containing details about&#10;requested group or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="741">
+          <name>$groupId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="760" package="Cloud">
+        <name>getSharedIpGroups</name>
+        <full_name>getSharedIpGroups</full_name>
+        <docblock line="753">
+          <description>Retrieve all the available shared IP groups</description>
+          <long-description></long-description>
+          <tag line="753" name="param" description="should response contain an array of&#10;servers group has" type="bool" variable="$isDetailed">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="753" name="return" description="returns json string of groups or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="760">
+          <name>$isDetailed</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="780" package="Cloud">
+        <name>getBackupSchedule</name>
+        <full_name>getBackupSchedule</full_name>
+        <docblock line="772">
+          <description>Retrieve back-up schedule for a specific server</description>
+          <long-description></long-description>
+          <tag line="772" name="param" description="id of server you wish to retrieve back-up&#10;schedule for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="772" name="return" description="returns json string of current back-up schedule or&#10;false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="780">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="806" package="Cloud">
+        <name>addBackupSchedule</name>
+        <full_name>addBackupSchedule</full_name>
+        <docblock line="792">
+          <description>Create a new back-up schedule for a server</description>
+          <long-description></long-description>
+          <tag line="792" name="throws" description="" type="\Cloud\Server\Exception">
+            <type by_reference="false">\Cloud\Server\Exception</type>
+          </tag>
+          <tag line="792" name="param" description="id of a server this back-up schedule is&#10;intended for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="792" name="param" description="day of the week this back-up should run,&#10;look at $backupSchedules array and/or documentation for valid parameters" type="string" variable="$weekly">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="792" name="param" description="time of the day this back-up should run,&#10;look at $backupSchedules array and/or documentation for valid parameters" type="string" variable="$daily">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="792" name="param" description="should this scheduled back-up be enabled&#10;or disabled, default is set to enabled." type="bool" variable="$isEnabled">
+            <type by_reference="false">bool</type>
+          </tag>
+          <tag line="792" name="return" description="true on success and false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="806">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="806">
+          <name>$weekly</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="806">
+          <name>$daily</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="806">
+          <name>$isEnabled</name>
+          <default>true</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="840" package="Cloud">
+        <name>deleteBackupSchedule</name>
+        <full_name>deleteBackupSchedule</full_name>
+        <docblock line="833">
+          <description>Deletes scheduled back-up for specific server</description>
+          <long-description></long-description>
+          <tag line="833" name="param" description="id of server you wish to delete all&#10;scheduled back-ups for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="833" name="return" description="returns true on success or false on failure" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="840">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="862" package="Cloud">
+        <name>createServer</name>
+        <full_name>createServer</full_name>
+        <docblock line="852">
+          <description>Creates a new server on the cloud</description>
+          <long-description></long-description>
+          <tag line="852" name="param" description="server name, must be unique" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="852" name="param" description="server image you wish to use" type="int" variable="$imageRefId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="852" name="param" description="server flavor you wish to use" type="int" variable="$flavorRefId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="852" name="param" description="optional group id of server cluster" type="int" variable="$groupId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="852" name="return" description="returns json string of server's configuration&#10;or false on failure" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="862">
+          <name>$name</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="862">
+          <name>$imageRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="862">
+          <name>$flavorRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="862">
+          <name>$groupId</name>
+          <default>false</default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="928" package="Cloud">
+        <name>addServerFile</name>
+        <full_name>addServerFile</full_name>
+        <docblock line="919">
+          <description>Adds file to inject while creating new server</description>
+          <long-description></long-description>
+          <tag line="919" name="param" description="full file path where file will&#10;be put (/etc/motd,etc)" type="string" variable="$file">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="919" name="param" description="content of the file&#10;(Welcome to my server, etc)" type="string" variable="$content">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="919" name="return" description="returns array of all files pending injection" type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+        <argument line="928">
+          <name>$file</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="928">
+          <name>$content</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="943" package="Cloud">
+        <name>updateServer</name>
+        <full_name>updateServer</full_name>
+        <docblock line="934">
+          <description>Update server's name and password</description>
+          <long-description></long-description>
+          <tag line="934" name="param" description="id of server you wish to update" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="934" name="param" description="new server name" type="string" variable="$name">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="934" name="param" description="new server password" type="string" variable="$password">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="934" name="return" description="returns false on failure or server configuration&#10;on success" type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="943">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="943">
+          <name>$name</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="943">
+          <name>$password</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="967" package="Cloud">
+        <name>deleteServer</name>
+        <full_name>deleteServer</full_name>
+        <docblock line="961">
+          <description>Delete server</description>
+          <long-description></long-description>
+          <tag line="961" name="param" description="id of server you wish to delete" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="961" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="967">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="988" package="Cloud">
+        <name>rebuildServer</name>
+        <full_name>rebuildServer</full_name>
+        <docblock line="980">
+          <description>Rebuild server using another server image</description>
+          <long-description></long-description>
+          <tag line="980" name="param" description="id of server you wish to rebuild" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="980" name="param" description="id of server image you wish to use for&#10;this rebuild" type="int" variable="$imageRefId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="980" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="988">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="988">
+          <name>$imageRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="1013" package="Cloud">
+        <name>resizeServer</name>
+        <full_name>resizeServer</full_name>
+        <docblock line="1006">
+          <description>Resize server to another flavor (server configuration)</description>
+          <long-description></long-description>
+          <tag line="1006" name="param" description="id of server you wish to resize" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1006" name="param" description="id of a flavor you wish to use as a starting point" type="int" variable="$flavorRefId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1006" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1013">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="1013">
+          <name>$flavorRefId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="1037" package="Cloud">
+        <name>confirmResize</name>
+        <full_name>confirmResize</full_name>
+        <docblock line="1031">
+          <description>Confirm resize of server</description>
+          <long-description></long-description>
+          <tag line="1031" name="param" description="id of server this confirmation is for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1031" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1037">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="1057" package="Cloud">
+        <name>revertResize</name>
+        <full_name>revertResize</full_name>
+        <docblock line="1051">
+          <description>Revert resize changes</description>
+          <long-description></long-description>
+          <tag line="1051" name="param" description="id of server you wish to revert resize for" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1051" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1057">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Cloud" line="1078" package="Cloud">
+        <name>rebootServer</name>
+        <full_name>rebootServer</full_name>
+        <docblock line="1071">
+          <description>Reboots server</description>
+          <long-description></long-description>
+          <tag line="1071" name="param" description="id of server you wish to reboot" type="int" variable="$serverId">
+            <type by_reference="false">int</type>
+          </tag>
+          <tag line="1071" name="param" description="specify what kind of reboot you wish to perform" type="string" variable="$type">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="1071" name="return" description="returns true on success or false on fail" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+        <argument line="1078">
+          <name>$serverId</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="1078">
+          <name>$type</name>
+          <default>'soft'</default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file Server.php</error>
+      <error line="530" code="50014">Name of argument $isDetailed does not match with the DocBlock's name $serverId in getImages()</error>
+      <notice line="530" code="50013">Parameter $serverId could not be found in getImages()</notice>
+    </parse_markers>
+  </file>
+  <package name="Cloud" full_name="Cloud">
+    <package name="Cloud" full_name="Cloud\Cloud">
+      <package name="Exception" full_name="Cloud\Cloud\Exception"/>
+    </package>
+  </package>
+  <package name="Default" full_name="Default"/>
+  <namespace name="Cloud" full_name="Cloud">
+    <namespace name="Server" full_name="Cloud\Server"/>
+  </namespace>
+  <marker count="0">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>
