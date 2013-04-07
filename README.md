@@ -1,7 +1,7 @@
-php-cloudservers (v2.0)
+Rackspace Open Cloud API Client for PHP (v2.0)
 ==========================
 
-A PHP 5 API client that allows you to interact with Rackspace® Cloud Servers™
+A PHP 5 API client that allows you to interact with Rackspace® Open Cloud Servers™
 
 Based on specifications released by Rackspace®
 
