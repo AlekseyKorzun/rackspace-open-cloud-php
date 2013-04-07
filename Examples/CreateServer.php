@@ -21,8 +21,8 @@ DEFINE('API_ID', '');
 DEFINE('API_KEY', '');
 
 // Change these to reflect current flavors/images
-DEFINE('SERVER_IMAGE_ID', 119);
-DEFINE('SERVER_FLAVOR_ID', 1);
+DEFINE('SERVER_IMAGE_ID', 'a10eacf7-ac15-4225-b533-5744f1fe47c1');
+DEFINE('SERVER_FLAVOR_ID', 2);
 
 try {
 	// Initialize connection

@@ -1,4 +1,4 @@
-php-cloudservers (v0.3)
+php-cloudservers (v2.0)
 ==========================
 
 A PHP 5 API client that allows you to interact with Rackspace® Cloud Servers™
