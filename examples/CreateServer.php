@@ -25,18 +25,18 @@ DEFINE('SERVER_IMAGE_ID', 'a10eacf7-ac15-4225-b533-5744f1fe47c1');
 DEFINE('SERVER_FLAVOR_ID', 2);
 
 try {
-	// Initialize connection
-	$cloud = new Cloud\Server(API_ID, API_KEY);
+    // Initialize connection
+    $cloud = new Cloud\Server(API_ID, API_KEY);
 
-	// Add custom MOTD file to our server
-	$cloud->addServerFile('/etc/motd', 'This is a custom MOTD user(s) will see upon login');
+    // Add custom MOTD file to our server
+    $cloud->addServerFile('/etc/motd', 'This is a custom MOTD user(s) will see upon login');
 
-	// Create a new server
-	$response = $cloud->createServer('Server Name', SERVER_IMAGE_ID, SERVER_FLAVOR_ID);
-	if ($response) {
-		print "Server created under id: ". $response->server->id . "\n";
-	}
+    // Create a new server
+    $response = $cloud->createServer('Server Name', SERVER_IMAGE_ID, SERVER_FLAVOR_ID);
+    if ($response) {
+        print "Server created under id: " . $response->server->id . "\n";
+    }
 } catch (Exception $exception) {
-	print $exception->getMessage();
+    print $exception->getMessage();
 }
 
