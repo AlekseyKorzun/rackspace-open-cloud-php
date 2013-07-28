@@ -23,7 +23,7 @@ use Cloud\Server\Exception;
  * @version 0.3
  * @license bsd
  * @author Aleksey Korzun <al.ko@webfoundation.net>
- * @link http://github.com/AlekseyKorzun/php-cloudservers/
+ * @link https://github.com/AlekseyKorzun/rackspace-open-cloud-php
  * @link http://www.alekseykorzun.com
  */
 class Server
@@ -292,7 +292,7 @@ class Server
                         $endpoints = $service->endpoints;
                         if ($endpoints) {
                             foreach ($endpoints as $endpoint) {
-                                if($endpoint->region == $region) {
+                                if ($endpoint->region == $region) {
                                     $this->serverUri = $endpoint->publicURL;
                                     break;
                                 }

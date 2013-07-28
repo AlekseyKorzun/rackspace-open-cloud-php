@@ -21,22 +21,22 @@ DEFINE('API_ID', '');
 DEFINE('API_KEY', '');
 
 try {
-	// Initialize connection
-	$cloud = new Cloud\Server(API_ID, API_KEY);
+    // Initialize connection
+    $cloud = new Cloud\Server(API_ID, API_KEY);
 
-	// Retrieve all of available servers with full details
-	$response = $cloud->getServers(true);
+    // Retrieve all of available servers with full details
+    $response = $cloud->getServers(true);
 
-	// If list of servers was successfully retrieved we should now have number
-	// of servers that we can loop throught
-	if ($response) {
-		foreach ($response->servers as $server) {
-			print "Server id: {$server->id} \n";
-			print_r($server);
-			print "\n";
-		}
-	}
+    // If list of servers was successfully retrieved we should now have number
+    // of servers that we can loop throught
+    if ($response) {
+        foreach ($response->servers as $server) {
+            print "Server id: {$server->id} \n";
+            print_r($server);
+            print "\n";
+        }
+    }
 } catch (Exception $exception) {
-	print $exception->getMessage();
+    print $exception->getMessage();
 }
 
